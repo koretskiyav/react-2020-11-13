@@ -1,6 +1,9 @@
 import React from 'react';
 import counter from '../hocs/counter';
 
+import Plus from '../icons/plus';
+import minus from '../icons/minus.svg';
+
 function Product(props) {
   const { count, decrement, increment } = props;
 
@@ -8,9 +11,13 @@ function Product(props) {
     <div>
       <p>{props.product.name}</p>
       <p>{props.product.price} $</p>
-      <button onClick={decrement}>-</button>
+      <button onClick={decrement}>
+        <img src={minus} alt="minus" />
+      </button>
       <span>{count}</span>
-      <button onClick={increment}>+</button>
+      <button onClick={increment}>
+        <Plus />
+      </button>
     </div>
   );
 }
