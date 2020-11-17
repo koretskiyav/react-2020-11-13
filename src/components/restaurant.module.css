@@ -1,0 +1,8 @@
+.restaurants {
+  display: flex;
+  justify-content: space-between;
+}
+
+.block {
+  width: 300px;
+}
