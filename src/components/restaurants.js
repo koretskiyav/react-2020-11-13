@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Menu from './menu';
+import Restaurant from './restaurant';
 import Navigation from './navigation';
 
 export default function Restaurants(props) {
@@ -16,7 +16,10 @@ export default function Restaurants(props) {
         onRestaurantClick={setActiveId}
         restaurants={props.restaurants}
       />
-      <Menu menu={activeRestaurant.menu} />
+      <Restaurant
+        menu={activeRestaurant.menu}
+        reviews={activeRestaurant.reviews}
+      />
     </div>
   );
 }
