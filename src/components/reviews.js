@@ -10,7 +10,6 @@ export default function Reviews(props) {
             User : <span className="reviewUser">{review.user}</span>
           </p>
           <p className="reviewText">{review.text}</p>
-          <span>Rating: </span>
           <Rate rate={review.rating} />
         </div>
       ))}

@@ -66,3 +66,9 @@ p {
   padding-top: 15px;
   text-align: center;
 }
+
+.star {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
