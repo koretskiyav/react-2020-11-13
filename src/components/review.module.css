@@ -1,0 +1,10 @@
+.review {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid #ddd;
+  flex: 1;
+}
