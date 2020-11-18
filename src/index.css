@@ -11,3 +11,64 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.appContainer,
+.navContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.restContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.navContainer {
+  margin: 50px 0 20px;
+}
+
+.menuContainer p {
+  padding-bottom: 10px;
+}
+
+.menuContainer div {
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.flexItem {
+  flex: 1 1 0px;
+}
+
+.reviewBox {
+  border: 1px solid #ddd;
+  text-align: center;
+  margin-bottom: 5px;
+  padding: 10px 15px;
+}
+
+.reviewUser {
+  color: blue;
+}
+
+.reviewText {
+  font-style: italic;
+  padding-top: 10px;
+}
+
+.avgRate {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.star {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}

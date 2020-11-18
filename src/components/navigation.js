@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Navigation(props) {
   return (
-    <div>
+    <div className="navContainer">
       {props.restaurants.map((restaurant) => (
         <button
           key={restaurant.id}
