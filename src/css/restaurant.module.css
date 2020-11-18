@@ -1,0 +1,11 @@
+.restaurant {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px 32px;
+  padding: 40px;
+}
+
+.restaurant__rating {
+  grid-column-end: span 2;
+  margin: 0;
+}
