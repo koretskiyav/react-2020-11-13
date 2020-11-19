@@ -2,6 +2,9 @@ import React from 'react';
 import Star from '../star';
 import './rate.css';
 
+const calculateStarFullness = ({ starIndex, wholeStar, rest, rating }) =>
+  starIndex < wholeStar ? 1 : starIndex + rest === rating ? rest : 0;
+
 const Rate = ({ rating = 0 }) => {
   const wholeStar = Math.floor(rating);
   const rest = rating - wholeStar;
@@ -12,7 +15,12 @@ const Rate = ({ rating = 0 }) => {
         {[...Array(5)].map((_, i) => (
           <Star
             key={i}
-            fullness={i < wholeStar ? 1 : i + rest === rating ? rest : 0}
+            fullness={calculateStarFullness({
+              starIndex: i,
+              wholeStar,
+              rest,
+              rating,
+            })}
           />
         ))}
       </div>
