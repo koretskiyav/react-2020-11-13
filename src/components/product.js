@@ -1,6 +1,5 @@
 import React from 'react';
 import counter from '../hocs/counter';
-
 import Plus from '../icons/plus';
 import minus from '../icons/minus.svg';
 

@@ -1,0 +1,12 @@
+section {
+  display: flex;
+}
+
+section > * {
+  width: 50%;
+}
+
+.average-text {
+  margin: 1em;
+  color: chocolate;
+}
