@@ -1,18 +1,23 @@
 import React from 'react';
 
+import Menu from './menu';
 import Reviews from './Reviews/reviews';
 
 export default function Restaurant(props) {
+  const { review, menu } = props;
   return (
     <div>
-      {props.review.map((reviews) => {
+      <Menu menu={menu} />
+      {review.map((props) => {
         return (
-          <Reviews
-            key={reviews.id}
-            user={reviews.user}
-            text={reviews.text}
-            rating={reviews.rating}
-          />
+          <div>
+            <Reviews
+              key={props.id}
+              user={props.user}
+              text={props.text}
+              rating={props.rating}
+            />
+          </div>
         );
       })}
     </div>
