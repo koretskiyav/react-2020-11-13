@@ -12,7 +12,7 @@ const Rate = (props) => {
       if (index !== array.length - 1) {
         return acc + rating;
       }
-      return (acc + rating) / 2;
+      return (acc + rating) / array.length;
     }, 0);
     if (typeof rating === 'number') {
       return `${rating}`.match(/\d+(\.\d)?/)[0];
@@ -25,7 +25,7 @@ const Rate = (props) => {
         <Typography component="legend">Средний рейтинг меню:</Typography>
         <Rating
           name="read-only"
-          max={10}
+          max={5}
           value={+avarageRating}
           precision={0.5}
           readOnly

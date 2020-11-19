@@ -22,7 +22,7 @@ const Reviews = (props) => {
         <Typography component="legend">Оценка:</Typography>
         <Rating
           name="read-only"
-          max={10}
+          max={5}
           value={+el.rating}
           precision={0.5}
           readOnly
