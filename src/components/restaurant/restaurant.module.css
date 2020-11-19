@@ -1,0 +1,26 @@
+.restaurant {
+  margin: 10px;
+}
+
+.restaurant_header {
+  display: flex;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.restaurant_header p {
+  margin: 0 0 0 20px;
+  font-weight: 400;
+}
+
+.restaurant_body {
+  display: flex;
+}
+
+.restaurant_reviews {
+  margin-left: 100px;
+  width: 230px;
+  padding: 20px;
+  background: #eee;
+  border-radius: 5px;
+}

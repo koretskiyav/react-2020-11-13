@@ -1,0 +1,25 @@
+.review {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.review p {
+  margin: 0;
+}
+
+.review_info {
+  margin-right: 50px;
+}
+
+.review_rating {
+  margin-left: auto;
+}
+
+.review_user {
+  margin-bottom: 5px;
+}
+
+.review_text {
+  font-style: italic;
+  color: #8e8e8e;
+}
