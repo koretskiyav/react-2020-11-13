@@ -1,0 +1,14 @@
+.Reviews {
+  margin-top: 14px;
+  max-width: 250px;
+  width: 100%;
+}
+
+.Comment {
+  padding-left: 16px;
+}
+
+.MuiBoxRoot {
+  margin-left: 0;
+  padding-left: 0;
+}

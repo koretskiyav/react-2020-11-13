@@ -1,0 +1,14 @@
+.Restaurant {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid rgba(176, 151, 106, 1);
+  transition: all 1s;
+  max-width: 500px;
+  width: 100%;
+  padding: 25px;
+  margin-top: 25px;
+}
+
+.Restaurant:hover {
+  box-shadow: 0 0 5px 5px hsla(0, 0%, 66.7%, 0.7);
+}
