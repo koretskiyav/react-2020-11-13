@@ -17,5 +17,6 @@
 }
 
 .star_selected {
+  height: 25px;
   background-color: red;
 }
