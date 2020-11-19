@@ -1,3 +1,12 @@
 .rate {
   display: inline-flex;
+  flex-direction: column;
+}
+
+.rate__stars {
+  display: inline-flex;
+}
+
+.rate__info {
+  text-align: center;
 }

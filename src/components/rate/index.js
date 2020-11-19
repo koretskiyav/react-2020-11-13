@@ -8,12 +8,15 @@ const Rate = ({ rating = 0 }) => {
 
   return (
     <div className="rate">
-      {[...Array(5)].map((_, i) => (
-        <Star
-          key={i}
-          fullness={i < wholeStar ? 1 : i + rest === rating ? rest : 0}
-        />
-      ))}
+      <div className="rate__stars">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            fullness={i < wholeStar ? 1 : i + rest === rating ? rest : 0}
+          />
+        ))}
+      </div>
+      <div className="rate__info">Rating {rating} of 5</div>
     </div>
   );
 };
