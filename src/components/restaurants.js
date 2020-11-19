@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import Menu from './menu';
 import Navigation from './navigation';
 import Restaurant from './restaurant';
 

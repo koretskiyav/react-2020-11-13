@@ -1,9 +1,9 @@
 import React from 'react';
 import Review from './review';
 
-const Reviews = ({ reviews = [] }) => {
+const Reviews = ({ reviews = [], className = '' }) => {
   return (
-    <div className="reviews">
+    <div className={`reviews ${className}`}>
       {reviews.map((review) => (
         <Review key={review.id} {...review} />
       ))}

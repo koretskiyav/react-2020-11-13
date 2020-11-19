@@ -1,0 +1,8 @@
+.restaurant {
+  display: flex;
+}
+
+.restaurant__reviews,
+.restaurant__menu {
+  margin-left: 50px;
+}

@@ -6,6 +6,8 @@ const calculateStarFullness = ({ starIndex, wholeStar, rest, rating }) =>
   starIndex < wholeStar ? 1 : starIndex + rest === rating ? rest : 0;
 
 const Rate = ({ rating = 0 }) => {
+  rating = Number(rating.toFixed(1));
+
   const wholeStar = Math.floor(rating);
   const rest = rating - wholeStar;
 
