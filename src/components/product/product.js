@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './product.module.css';
 import MinusIcon from './icons/minus.svg';
 import PlusIcon from './icons/plus.svg';
@@ -29,5 +30,16 @@ const Product = ({ product, amount, increment, decrement }) => (
     </div>
   </div>
 );
+
+Product.propTypes = {
+  product: PropTypes.shape({
+    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    name: PropTypes.string,
+    price: PropTypes.number,
+  }).isRequired,
+  amount: PropTypes.number,
+  decrement: PropTypes.func,
+  increment: PropTypes.func,
+};
 
 export default counter(Product);
