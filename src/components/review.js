@@ -1,7 +1,7 @@
 import React from 'react';
 import Rate from './rate';
 
-export default function Product(props) {
+export default function Review(props) {
   const { user, text, rating } = props.content;
 
   return (
