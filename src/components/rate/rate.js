@@ -11,10 +11,6 @@ const Rate = ({ value }) => (
   </div>
 );
 
-//Rate.defaultProps = {
-//value: 0,
-//};
-
 Rate.propTypes = {
   value: PropTypes.number.isRequired,
 };
