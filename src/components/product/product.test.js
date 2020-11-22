@@ -26,6 +26,7 @@ describe('Product', () => {
 
   it('should decrement amount', () => {
     const wrapper = mount(<Product product={product} />);
+    wrapper.find('[data-id="product-increment"]').simulate('click');
     wrapper.find('[data-id="product-decrement"]').simulate('click');
     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
   });
