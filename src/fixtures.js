@@ -33,7 +33,7 @@ const restaurants = [
         id: '5909796d-5030-4e36-adec-68b8f9ec2d96',
         user: 'Antony',
         text: 'Not bad',
-        rating: 5,
+        rating: 4,
       },
       {
         id: '429dea85-11dd-4054-a31e-c60c92e17255',

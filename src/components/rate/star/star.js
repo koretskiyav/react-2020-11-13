@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import styles from './star.module.css';
 
-const Star = ({ checked }) => (
+const Star = ({ checked = false }) => (
   <svg
     className={cn(styles.star, { [styles.checked]: checked })}
     width="16"
