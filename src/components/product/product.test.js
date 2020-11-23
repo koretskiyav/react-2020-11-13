@@ -29,4 +29,30 @@ describe('Product', () => {
     mount(<Product product={product} fetchData={fn} />);
     expect(fn).toBeCalledWith(product.id);
   });
+
+  it('should decrement amount', () => {
+    const realUseState = React.useState;
+    const useStateMock = jest.spyOn(React, 'useState');
+
+    // подменяем useState на мок и задаём изначальное состояние useState
+    // в хуке use-amount
+    useStateMock.mockImplementationOnce(() => realUseState(3));
+
+    const wrapper = mount(<Product product={product} />);
+
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('2');
+
+    // возвращаем оригинальную имплементацию useState
+    jest.restoreAllMocks();
+  });
+
+  it('should not decrement amount if amount is 0', () => {
+    const wrapper = mount(<Product product={product} />);
+
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
+  });
 });

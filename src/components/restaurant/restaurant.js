@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { arrayOf, shape, string, number, object } from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
@@ -24,6 +25,18 @@ const Restaurant = ({ restaurant }) => {
       </div>
     </div>
   );
+};
+
+Restaurant.propTypes = {
+  restaurant: shape({
+    name: string.isRequired,
+    menu: arrayOf(object).isRequired,
+    reviews: arrayOf(
+      shape({
+        rating: number,
+      }).isRequired
+    ).isRequired,
+  }).isRequired,
 };
 
 export default Restaurant;
