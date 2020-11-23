@@ -6,6 +6,7 @@ import { restaurants } from '../../fixtures';
 Enzyme.configure({ adapter: new Adapter() });
 
 const product = restaurants[0].menu[0];
+const amount = 1;
 
 describe('Product', () => {
   it('should render', () => {
@@ -22,6 +23,19 @@ describe('Product', () => {
     const wrapper = mount(<Product product={product} />);
     wrapper.find('[data-id="product-increment"]').simulate('click');
     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('1');
+  });
+
+  it('should decrement amount *increment click*', () => {
+    const wrapper = mount(<Product product={product} />);
+    wrapper.find('[data-id="product-increment"]').simulate('click');
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
+  });
+
+  it('should decrement amount *no increment click*', () => {
+    const wrapper = mount(<Product product={product} amount={amount} />);
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
   });
 
   it('should fetch data on mount', () => {
