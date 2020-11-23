@@ -4,6 +4,8 @@ import styles from './banner.module.css';
 
 import DefaultBanner from './banner.jpg';
 
+import PropTypes from 'prop-types';
+//???
 const Banner = ({ img = DefaultBanner, heading, description, children }) => (
   <div className={styles.banner}>
     <img src={img} className={styles.img} alt="banner" />
@@ -14,5 +16,12 @@ const Banner = ({ img = DefaultBanner, heading, description, children }) => (
     </div>
   </div>
 );
+
+Banner.propTypes = {
+  img: PropTypes.string,
+  heading: PropTypes.string,
+  description: PropTypes.string,
+  children: PropTypes.element,
+};
 
 export default Banner;

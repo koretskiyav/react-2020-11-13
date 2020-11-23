@@ -6,6 +6,7 @@ import PlusIcon from './icons/plus.svg';
 
 import counter from '../../hocs/counter';
 
+//???
 const Product = ({ product, amount, increment, decrement, fetchData }) => {
   useEffect(() => {
     fetchData && fetchData(product.id);
