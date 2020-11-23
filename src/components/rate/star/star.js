@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import styles from './star.module.css';
@@ -17,3 +18,7 @@ const Star = ({ checked }) => (
 );
 
 export default Star;
+
+Star.propTypes = {
+  checked: PropTypes.bool.isRequired,
+};

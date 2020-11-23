@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Star from './star';
 
 const Rate = ({ value }) => (
@@ -11,3 +11,7 @@ const Rate = ({ value }) => (
 );
 
 export default Rate;
+
+Rate.propTypes = {
+  value: PropTypes.number.isRequired,
+};
