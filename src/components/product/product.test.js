@@ -24,6 +24,26 @@ describe('Product', () => {
     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('1');
   });
 
+  describe('should decrement amount', () => {
+    function makeTest(initValue) {
+      it(`should decrease non-zero value(initial -> ${initValue})`, () => {
+        let initAmount = initValue;
+        let resultAmount = initAmount - 1 < 0 ? 0 : initAmount - 1;
+        const wrapper = mount(
+          <Product product={product} initAmount={initAmount} />
+        );
+        wrapper.find('[data-id="product-decrement"]').simulate('click');
+        expect(wrapper.find('[data-id="product-amount"]').text()).toBe(
+          `${resultAmount}`
+        );
+      });
+    }
+
+    for (const value of [-1, 0, 2, 12]) {
+      makeTest(value);
+    }
+  });
+
   it('should fetch data on mount', () => {
     const fn = jest.fn();
     mount(<Product product={product} fetchData={fn} />);
