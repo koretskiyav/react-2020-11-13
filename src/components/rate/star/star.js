@@ -6,6 +6,8 @@ import styles from './star.module.css';
 const Star = ({ checked }) => (
   <svg
     className={cn(styles.star, { [styles.checked]: checked })}
+    data-id="star"
+    data-checked={`${checked}`}
     width="16"
     height="16"
     viewBox="0 0 16 16"

@@ -39,10 +39,9 @@ describe('Product', () => {
       });
     }
 
-    [-1, 0, 2, 12].map((value) => {
+    for (const value of [-1, 0, 2, 12]) {
       makeTest(value);
-      return null;
-    });
+    }
   });
 
   it('should fetch data on mount', () => {
