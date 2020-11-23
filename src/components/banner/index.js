@@ -1,10 +1,11 @@
 import React from 'react';
+import { string, oneOfType, arrayOf, element } from 'prop-types';
 
 import styles from './banner.module.css';
 
 import DefaultBanner from './banner.jpg';
 
-const Banner = ({ img = DefaultBanner, heading, description, children }) => (
+const Banner = ({ img, heading, description, children }) => (
   <div className={styles.banner}>
     <img src={img} className={styles.img} alt="banner" />
     <div className={styles.caption}>
@@ -14,5 +15,16 @@ const Banner = ({ img = DefaultBanner, heading, description, children }) => (
     </div>
   </div>
 );
+
+Banner.defaultProps = {
+  img: DefaultBanner,
+};
+
+Banner.propTypes = {
+  heading: string.isRequired,
+  img: string.isRequired,
+  description: string,
+  children: oneOfType([element, arrayOf(element)]),
+};
 
 export default Banner;

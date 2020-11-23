@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { arrayOf, shape, string, number, func } from 'prop-types';
 import styles from './product.module.css';
 import MinusIcon from './icons/minus.svg';
 import PlusIcon from './icons/plus.svg';
@@ -25,7 +25,11 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button className={styles.button} onClick={decrement}>
+              <button
+                className={styles.button}
+                onClick={decrement}
+                data-id="product-decrement"
+              >
                 <img src={MinusIcon} alt="minus" />
               </button>
               <button
@@ -44,14 +48,15 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
 };
 
 Product.propTypes = {
-  product: PropTypes.shape({
-    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    name: PropTypes.string,
-    price: PropTypes.number,
+  product: shape({
+    ingredients: arrayOf(string.isRequired).isRequired,
+    name: string,
+    price: number,
   }).isRequired,
-  amount: PropTypes.number,
-  decrement: PropTypes.func,
-  increment: PropTypes.func,
+  amount: number,
+  decrement: func,
+  increment: func,
+  fetchData: func,
 };
 
 export default counter(Product);
