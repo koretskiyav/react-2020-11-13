@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 const Reviews = ({ reviews }) => {
   if (!reviews || !reviews.length) {
     return (
-      <div className={styles.reviews}>
+      <div className={styles.reviews} data-id="reviews">
         <p>No reviews</p>
       </div>
     );
   }
 
   return (
-    <div className={styles.reviews}>
+    <div className={styles.reviews} data-id="reviews">
       {reviews.map((review) => (
         <Review key={review.id} {...review} />
       ))}
