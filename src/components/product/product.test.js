@@ -29,4 +29,15 @@ describe('Product', () => {
     mount(<Product product={product} fetchData={fn} />);
     expect(fn).toBeCalledWith(product.id);
   });
+
+  it('should be greater than zero', () => {
+    const wrapper = mount(<Product product={product} />);
+    const amount = Number(wrapper.find('[data-id="product-amount"]').text());
+
+    for (let i = 0; i > amount + 1; i++) {
+      wrapper.find('[data-id="product-minus"]').simulate('click');
+    }
+
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
+  });
 });
