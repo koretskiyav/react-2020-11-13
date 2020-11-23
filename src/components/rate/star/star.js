@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 
 import styles from './star.module.css';
 
-const Star = ({ checked }) => (
+const Star = ({ checked = false }) => (
   <svg
+    data-id="star"
+    data-checked={String(checked)}
     className={cn(styles.star, { [styles.checked]: checked })}
     width="16"
     height="16"
