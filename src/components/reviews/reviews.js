@@ -1,8 +1,17 @@
 import React from 'react';
 import Review from './review';
 import styles from './reviews.module.css';
+import PropTypes from 'prop-types';
 
 const Reviews = ({ reviews }) => {
+  if (!reviews || !reviews.length) {
+    return (
+      <div className={styles.reviews}>
+        <p>No reviews</p>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.reviews}>
       {reviews.map((review) => (
@@ -10,6 +19,14 @@ const Reviews = ({ reviews }) => {
       ))}
     </div>
   );
+};
+
+Reviews.propTypes = {
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+    }).isRequired
+  ),
 };
 
 export default Reviews;
