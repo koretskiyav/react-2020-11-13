@@ -11,12 +11,12 @@ describe('Star', () => {
     expect(wrapper.find('[data-id="star"]').length).toBe(1);
   });
 
-  it('renders not checked star by default', () => {
+  it('should render unchecked star by default', () => {
     const wrapper = mount(<Star />);
     expect(wrapper.find('[data-checked="false"]').length).toBe(1);
   });
 
-  it('renders  checked star ', () => {
+  it('should render checked star', () => {
     const wrapper = mount(<Star checked={true} />);
     expect(wrapper.find('[data-checked="true"]').length).toBe(1);
   });
