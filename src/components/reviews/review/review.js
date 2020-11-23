@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Rate from '../../rate';
 import styles from './review.module.css';
 
@@ -21,4 +21,9 @@ Review.defaultProps = {
   user: 'Anonymous',
 };
 
+Review.propTypes = {
+  user: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+};
 export default Review;
