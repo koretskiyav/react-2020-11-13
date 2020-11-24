@@ -5,7 +5,7 @@ import Review from './review';
 import { restaurants } from '../../../fixtures';
 Enzyme.configure({ adapter: new Adapter() });
 
-const review = restaurants[0].reviews[0];
+const review = restaurants[0].reviews[1];
 const anonymousReview = { ...review, user: undefined };
 
 describe('Review', () => {
@@ -37,7 +37,7 @@ describe('Review', () => {
     //Драйвер здесь так и напрашивается
     const wrapper = mount(<Review {...review} />);
     expect(
-      wrapper.find('[data-id="review-rate"] [data-id="rating-star"]')
+      wrapper.find('[data-id="review-rate"] [data-id="rating-star-checked"]')
     ).toHaveLength(review.rating);
   });
 });
