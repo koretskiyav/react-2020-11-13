@@ -49,6 +49,8 @@ Product.propTypes = {
     name: PropTypes.string,
     price: PropTypes.number,
   }).isRequired,
+  fetchData: PropTypes.func,
+  // from HOC counter
   amount: PropTypes.number,
   decrement: PropTypes.func,
   increment: PropTypes.func,
