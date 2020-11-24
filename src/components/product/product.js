@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styles from './product.module.css';
 import MinusIcon from './icons/minus.svg';
 import PlusIcon from './icons/plus.svg';
-
-import counter from '../../hocs/counter';
+import { decrement, increment } from '../../redux/actions';
 
 const Product = ({ product, amount, increment, decrement, fetchData }) => {
   useEffect(() => {
@@ -60,4 +60,18 @@ Product.propTypes = {
   increment: PropTypes.func,
 };
 
-export default counter(Product);
+const mapStateToProps = (state, ownProps) => ({
+  amount: state.order[ownProps.product.id] || 0,
+});
+
+// const mapDispatchToProps = {
+//   increment,
+//   decrement,
+// };
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  increment: () => dispatch(increment(ownProps.product.id)),
+  decrement: () => dispatch(decrement(ownProps.product.id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
