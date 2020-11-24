@@ -1,13 +1,15 @@
 import { DECREMENT, INCREMENT } from '../constants';
 
-const reducer = (amount = 0, action) => {
-  switch (action.type) {
+// { [productId]: amount }
+const reducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
     case INCREMENT:
-      return amount + 1;
+      return { ...state, [payload.id]: (state[payload.id] || 0) + 1 };
     case DECREMENT:
-      return amount - 1;
+      return { ...state, [payload.id]: (state[payload.id] || 0) - 1 };
     default:
-      return amount;
+      return state;
   }
 };
 
