@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT } from '../constants';
+import { DECREMENT, INCREMENT, RESET } from '../constants';
 
 // { [productId]: amount }
 const reducer = (state = {}, action) => {
@@ -8,6 +8,8 @@ const reducer = (state = {}, action) => {
       return { ...state, [payload.id]: (state[payload.id] || 0) + 1 };
     case DECREMENT:
       return { ...state, [payload.id]: (state[payload.id] || 0) - 1 };
+    case RESET:
+      return { ...state, [payload.id]: 0 };
     default:
       return state;
   }
