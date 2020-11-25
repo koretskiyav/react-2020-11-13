@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Navigation from '../navigation';
+import Order from '../order';
 
 const Restaurants = ({ restaurants }) => {
   const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id);
@@ -11,12 +12,15 @@ const Restaurants = ({ restaurants }) => {
     [activeRestaurantId, restaurants]
   );
 
+  const menus = restaurants.map((restaurant) => restaurant.menu).flat();
+
   return (
     <div>
       <Navigation
         restaurants={restaurants}
         onRestaurantClick={setActiveRestaurant}
       />
+      <Order menus={menus} />
       <Restaurant restaurant={activeRestaurant} />
     </div>
   );
