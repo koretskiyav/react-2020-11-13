@@ -1,39 +1,27 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { decrement, increment, remove } from '../../redux/actions';
-import style from './basket.module.css';
-import styles from '../product/product.module.css';
-import MinusIcon from '../product/icons/minus.svg';
-import PlusIcon from '../product/icons/plus.svg';
-// {id: {
-// amount: 1,
-// name: '',
-// price: 15
-// },
-// id2: {}
-// }
-// [{id, amount, name, price}] {id: amount, id2: amount}
-/*
-{
-  orders: [ {}, {}, ..., {}]
-}
- */
 
 const Basket = ({ order, increment, decrement, remove }) => {
+  const totalPrice = useMemo(
+    () => order.reduce((total, { price, amount }) => total + price * amount, 0),
+    [order]
+  );
+
   return (
     <div>
-      {order.map((item) => (
-        <div key={item.id}>
-          <span>{item.name}</span>
-          <span>{item.price}</span>
-          <span>{item.amount}</span>
+      {order.map(({ id, name, price, amount }) => (
+        <div key={id}>
+          <span>{`${name}, ${price} $ - ${amount} ${price * amount} $`}</span>
+
           <span>
-            <button onClick={() => decrement(item.id)}>-</button>
-            <button onClick={() => increment(item.id)}>+</button>
-            <button onClick={() => remove(item.id)}>x</button>
+            <button onClick={() => decrement(id)}>-</button>
+            <button onClick={() => increment(id)}>+</button>
+            <button onClick={() => remove(id)}>x</button>
           </span>
         </div>
       ))}
+      <div>{`total ${totalPrice} $`}</div>
     </div>
   );
 };
