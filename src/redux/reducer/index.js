@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import orderReducer from './order';
+import order from './order';
+import restaurants from './restaurants';
 
 const reducer = combineReducers({
-  foo: () => 'bar',
-  order: orderReducer,
+  order,
+  restaurants,
 });
 
 export default reducer;
