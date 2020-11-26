@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import Product from '../product';
 
 import styles from './menu.module.css';
 
 class Menu extends React.Component {
   static propTypes = {
-    menu: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }).isRequired
-    ).isRequired,
+    menu: PropTypes.arrayOf(PropTypes.string).isRequired,
+    products: PropTypes.objectOf(PropTypes.objectOf).isRequired,
   };
 
   state = { error: null };
@@ -21,7 +18,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { menu } = this.props;
+    const { menu, products } = this.props;
 
     if (this.state.error) {
       return <p>В этом ресторане меню не доступно</p>;
@@ -30,8 +27,8 @@ class Menu extends React.Component {
     return (
       <div className={styles.menu}>
         <div>
-          {menu.map((product) => (
-            <Product key={product.id} product={product} />
+          {menu.map((productId) => (
+            <Product key={productId} product={products[productId]} />
           ))}
         </div>
       </div>
@@ -39,4 +36,8 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+const mapStateToProps = (state) => ({
+  products: state.products,
+});
+
+export default connect(mapStateToProps)(Menu);
