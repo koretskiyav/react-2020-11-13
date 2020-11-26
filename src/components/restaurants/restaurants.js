@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Navigation from '../navigation';
+import Order from '../order/order';
 
 const Restaurants = ({ restaurants }) => {
   const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id);
@@ -11,13 +12,25 @@ const Restaurants = ({ restaurants }) => {
     [activeRestaurantId, restaurants]
   );
 
+  /*is to be removed, when data is taken from back-end*/
+  const allDishes = useMemo(
+    () =>
+      restaurants
+        .flatMap(({ menu }) => [...menu])
+        .reduce((obj, dish) => ({ [dish.id]: dish, ...obj }), {}),
+    [restaurants]
+  );
+
   return (
     <div>
       <Navigation
         restaurants={restaurants}
         onRestaurantClick={setActiveRestaurant}
       />
-      <Restaurant restaurant={activeRestaurant} />
+      <div>
+        <Restaurant restaurant={activeRestaurant} allDishes={allDishes} />
+        <Order allDishes={allDishes} />
+      </div>
     </div>
   );
 };
