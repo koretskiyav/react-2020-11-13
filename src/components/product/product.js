@@ -6,11 +6,10 @@ import MinusIcon from './icons/minus.svg';
 import PlusIcon from './icons/plus.svg';
 import { decrement, increment } from '../../redux/actions';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
+const Product = ({ product, amount, increment2, decrement2, fetchData }) => {
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
-
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
@@ -27,14 +26,14 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
             <div className={styles.buttons}>
               <button
                 className={styles.button}
-                onClick={decrement}
+                onClick={() => decrement2(product.id)}
                 data-id="product-decrement"
               >
                 <img src={MinusIcon} alt="minus" />
               </button>
               <button
                 className={styles.button}
-                onClick={increment}
+                onClick={() => increment2(product.id)}
                 data-id="product-increment"
               >
                 <img src={PlusIcon} alt="plus" />
@@ -60,8 +59,8 @@ Product.propTypes = {
   increment: PropTypes.func,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  amount: state.order[ownProps.product.id] || 0,
+const mapStateToProps = (store, ownProps) => ({
+  amount: store.order[ownProps.product.id] || 0,
 });
 
 // const mapDispatchToProps = {
@@ -69,9 +68,18 @@ const mapStateToProps = (state, ownProps) => ({
 //   decrement,
 // };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  increment: () => dispatch(increment(ownProps.product.id)),
-  decrement: () => dispatch(decrement(ownProps.product.id)),
-});
+const mapDispatchToProps = (dispatch) => {
+  console.log('mapDispatchToProps, called by redux');
+  return {
+    increment2: (id) => {
+      console.log('dispatch, increment');
+      dispatch(increment(id));
+    },
+    decrement2: (id) => {
+      console.log('dispatch, decrement');
+      dispatch(decrement(id));
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
