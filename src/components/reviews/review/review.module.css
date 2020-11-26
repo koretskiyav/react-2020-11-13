@@ -1,6 +1,5 @@
 .review {
   padding: 0;
-  position: relative;
   margin-bottom: 16px;
   border: 1px solid var(--grey);
   background-color: var(--white);

@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Restaurants from '../restaurants';
 import Header from '../header';
 
-export default class App extends PureComponent {
+class App extends PureComponent {
   render() {
     return (
       <div>
@@ -17,3 +18,9 @@ export default class App extends PureComponent {
 App.propTypes = {
   restaurants: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  restaurants: state.restaurants,
+});
+
+export default connect(mapStateToProps)(App);
