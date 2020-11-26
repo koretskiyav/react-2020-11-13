@@ -4,6 +4,7 @@ import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
+import Order from '../order';
 import styles from './restaurant.module.css';
 
 const Restaurant = ({ restaurant }) => {
@@ -19,6 +20,9 @@ const Restaurant = ({ restaurant }) => {
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
+      <div className={styles.order}>
+        <Order />
+      </div>
       <div className={styles.restaurant}>
         <Menu menu={menu} />
         <Reviews reviews={reviews} />

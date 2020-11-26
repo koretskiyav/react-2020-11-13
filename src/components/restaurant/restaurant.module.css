@@ -1,3 +1,10 @@
 .restaurant {
   padding: 12px;
 }
+
+.order {
+  width: 700px;
+  margin-left: auto;
+  margin-right: 25px;
+  padding: 25px 26px
+}

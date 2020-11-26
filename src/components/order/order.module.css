@@ -1,0 +1,10 @@
+.list {
+    padding: 0;
+}
+
+.total {
+    font-size: 20px;
+    font-weight: 700;
+    display: block;
+    text-align: right;
+}
