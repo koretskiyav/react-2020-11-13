@@ -6,6 +6,7 @@ import restaurants from './restaurants';
 const reducer = combineReducers({
   order,
   restaurants,
+  foo: (state = 'bar') => state + 'a',
 });
 
 export default reducer;
