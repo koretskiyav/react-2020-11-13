@@ -1,0 +1,17 @@
+.order {
+  width: 300px;
+  padding: 24px;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  box-shadow: 0 0 4px #d8d8d8;
+  z-index: 1000;
+}
+
+.totalPrice {
+  font-size: 24px;
+  line-height: 28px;
+}

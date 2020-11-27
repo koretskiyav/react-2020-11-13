@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Navigation from '../navigation';
+import Order from '../order/order';
 
 const Restaurants = ({ restaurants }) => {
   const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id);
@@ -11,6 +12,15 @@ const Restaurants = ({ restaurants }) => {
     [activeRestaurantId, restaurants]
   );
 
+  const restaurantProducts = restaurants
+    .flatMap(({ menu }) => menu)
+    .reduce((obj, el) => {
+      return {
+        [el.id]: el,
+        ...obj,
+      };
+    }, {});
+
   return (
     <div>
       <Navigation
@@ -18,6 +28,7 @@ const Restaurants = ({ restaurants }) => {
         onRestaurantClick={setActiveRestaurant}
       />
       <Restaurant restaurant={activeRestaurant} />
+      <Order products={restaurantProducts} />
     </div>
   );
 };
