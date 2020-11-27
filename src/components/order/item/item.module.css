@@ -1,0 +1,21 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 20px);
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid white;
+  color: var(--grey);
+}
+
+.name {
+  width: 40%;
+}
+
+.text {
+  width: 10%;
+}
+
+.count {
+  width: 4%;
+}

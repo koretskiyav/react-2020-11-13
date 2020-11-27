@@ -1,0 +1,15 @@
+.order {
+  width: 75%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.total {
+  display: block;
+  margin: 20px 0;
+  padding: 15px 5px;
+  border-top: 2px solid white;
+  text-align: right;
+}
