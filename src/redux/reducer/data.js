@@ -5,7 +5,7 @@ const reducer = (state = {}, action) => {
   const { type, payload } = action;
   switch (type) {
     case ADD_DATA:
-      return { ...state, data: payload.data };
+      return { ...state, data: [...payload.data] };
 
     default:
       return state;

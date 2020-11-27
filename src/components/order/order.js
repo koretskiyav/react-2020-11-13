@@ -3,14 +3,12 @@ import styles from './order.module.css';
 import { connect } from 'react-redux';
 import Item from './item';
 
-const Order = ({ order, data }) => {
-  let itemsArr = Object.entries(order);
+function getProductsFromData(order, data) {
+  if (data) {
+    const itemsArr = Object.entries(order);
+    const allProducts = [];
 
-  // FIXME, REFACTORED
-  // AND add USE EFFECT or  USEMEMO
-  let allProducts = [];
-  if (data.data) {
-    data.data.forEach((rest) => {
+    data.forEach((rest) => {
       rest.menu.forEach((product) => {
         itemsArr.forEach((item) => {
           if (product.id === item[0]) {
@@ -20,10 +18,17 @@ const Order = ({ order, data }) => {
         });
       });
     });
-  }
 
-  const totalSum = allProducts.reduce((a, b) => a + b.price * b.amount, 0);
-  console.log(totalSum);
+    return allProducts;
+  }
+}
+
+const Order = ({ order, data }) => {
+  const allProducts = data ? getProductsFromData(order, data) : [];
+  const totalSum = allProducts.reduce(
+    (result, product) => result + product.price * product.amount,
+    0
+  );
 
   return (
     <div className={styles.order}>
@@ -35,7 +40,6 @@ const Order = ({ order, data }) => {
         ))}
       </div>
       <h3 className={styles.total}>
-        {' '}
         TOTAL: &nbsp;
         {totalSum}
       </h3>
@@ -45,7 +49,7 @@ const Order = ({ order, data }) => {
 
 const mapStateToProps = (state) => ({
   order: state.order,
-  data: state.data,
+  data: state.data.data,
 });
 
 export default connect(mapStateToProps)(Order);
