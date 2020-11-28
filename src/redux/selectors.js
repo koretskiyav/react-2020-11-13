@@ -8,6 +8,8 @@ export const orderProductsSelector = createSelector(
   productsSelector,
   orderSelector,
   (products, order) => {
+    console.log('products: ', products);
+    console.log('order: ', order);
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
