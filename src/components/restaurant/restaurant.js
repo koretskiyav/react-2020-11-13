@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
@@ -41,4 +42,19 @@ Restaurant.propTypes = {
   }).isRequired,
 };
 
-export default Restaurant;
+const mapStateToProps = (state, ownProps) => ({
+  amount: state.order[ownProps.id] || 0,
+  restaurant: state.restaurants[ownProps.id],
+});
+
+// const mapDispatchToProps = {
+//   increment,
+//   decrement,
+// };
+
+// const mapDispatchToProps = (dispatch, ownProps) => ({
+//   increment: () => dispatch(increment(ownProps.id)),
+//   decrement: () => dispatch(decrement(ownProps.id)),
+// });
+
+export default connect(mapStateToProps)(Restaurant);
