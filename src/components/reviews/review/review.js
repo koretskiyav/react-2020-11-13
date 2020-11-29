@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Rate from '../../rate';
+import {
+  reviewsRestaurantSelector,
+  reviewsUsersSelector,
+} from '../../../redux/selectors';
 import styles from './review.module.css';
 
 const Review = ({ review, user }) => (
@@ -36,7 +40,10 @@ Review.defaultProps = {
   user: 'Anonymous',
 };
 
-export default connect((state, ownProps) => ({
-  review: state.reviews[ownProps.reviewId],
-  user: state.users[state.reviews[ownProps.reviewId].userId],
-}))(Review);
+export default connect((state, ownProps) => {
+  const reviewElem = reviewsRestaurantSelector(state)[ownProps.reviewId];
+  return {
+    review: reviewElem,
+    user: reviewsUsersSelector(state)[reviewElem.userId],
+  };
+})(Review);
