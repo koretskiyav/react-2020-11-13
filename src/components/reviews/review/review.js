@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import Rate from '../../rate';
 import styles from './review.module.css';
 
-const Review = ({ review }) => (
+const Review = ({ review, user }) => (
   <div className={styles.review} data-id="review">
     <div className={styles.content}>
       <div>
         <h4 className={styles.name} data-id="review-user">
-          {/* {review.user} */}
+          {user.name || 'Anonymous'}
         </h4>
         <p className={styles.comment} data-id="review-text">
           {review.text}
@@ -22,19 +22,15 @@ const Review = ({ review }) => (
   </div>
 );
 
-Review.propTypes = {
-  user: PropTypes.string,
-  text: PropTypes.string,
-  rating: PropTypes.number.isRequired,
-};
-
-Review.defaultProps = {
-  user: 'Anonymous',
-};
+// Review.propTypes = {
+//   user: PropTypes.string,
+//   text: PropTypes.string,
+//   rating: PropTypes.number.isRequired,
+// };
 
 const mapStateToProps = (state, ownProps) => ({
   review: state.reviews[ownProps.id],
-  // user: state.users[ state.reviews[ownProps.id].userId ]
+  user: state.users[state.reviews[ownProps.id]['userId']],
 });
 
 export default connect(mapStateToProps)(Review);
