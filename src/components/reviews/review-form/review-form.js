@@ -9,7 +9,7 @@ import Button from '../../button';
 
 const INITIAL_VALUES = { name: '', text: '', rate: 5 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ onSubmit, restId }) => {
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
@@ -52,8 +52,8 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, (dispatch, values) => ({
-  onSubmit: (values) => dispatch(addReview(values)), // TODO
+export default connect(null, (dispatch, ownProps) => ({
+  onSubmit: (values) => dispatch(addReview(values, ownProps.restId)), // TODO
 }))(ReviewForm);
 
 // const mapDispatchToProps = (dispatch, ownProps) => ({

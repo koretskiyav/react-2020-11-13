@@ -6,6 +6,7 @@ import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
+import { restaurants } from '../../fixtures';
 
 const Restaurant = ({ restaurant, reviews }) => {
   // const { name, menu, reviews } = restaurant;
@@ -20,7 +21,10 @@ const Restaurant = ({ restaurant, reviews }) => {
 
   const tabs = [
     { title: 'Menu', content: <Menu menu={restaurant.menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={restaurant.reviews} /> },
+    {
+      title: 'Reviews',
+      content: <Reviews restId={restaurant.id} reviews={restaurant.reviews} />,
+    },
   ];
 
   return (
