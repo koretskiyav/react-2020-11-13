@@ -6,7 +6,7 @@ const defaultUsers = normalizedUsers.reduce((acc, user) => {
   return acc;
 }, {});
 
-export const users = (state = defaultUsers, action) => {
+const users = (state = defaultUsers, action) => {
   const { type } = action;
 
   switch (type) {
@@ -14,3 +14,5 @@ export const users = (state = defaultUsers, action) => {
       return defaultUsers;
   }
 };
+
+export default users;
