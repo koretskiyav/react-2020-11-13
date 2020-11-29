@@ -23,9 +23,16 @@ const Review = ({ review, user }) => (
 );
 
 Review.propTypes = {
-  user: PropTypes.string,
-  text: PropTypes.string,
-  rating: PropTypes.number.isRequired,
+  review: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    text: PropTypes.string,
+    rate: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string,
+  }).isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
