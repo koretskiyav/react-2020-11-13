@@ -1,4 +1,10 @@
-import { normalizedReviews as defaultReviews } from '../../fixtures';
+import { normalizedReviews } from '../../fixtures';
+
+const defaultReviews = normalizedReviews.reduce((acc, review) => {
+  acc[review.id] = { ...review };
+
+  return acc;
+}, {});
 
 const reducer = (reviews = defaultReviews, action) => {
   const { type } = action;
