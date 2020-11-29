@@ -22,11 +22,11 @@ const Review = ({ review, user }) => (
   </div>
 );
 
-// Review.propTypes = {
-//   user: PropTypes.string,
-//   text: PropTypes.string,
-//   rating: PropTypes.number.isRequired,
-// };
+Review.propTypes = {
+  user: PropTypes.string,
+  text: PropTypes.string,
+  rating: PropTypes.number.isRequired,
+};
 
 const mapStateToProps = (state, ownProps) => ({
   review: state.reviews[ownProps.id],
