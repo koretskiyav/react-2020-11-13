@@ -1,7 +1,7 @@
-import { normalizedRestaurants } from '../../fixtures';
+import { normalizedUsers } from '../../fixtures';
 
-const defaultRestaurants = normalizedRestaurants.reduce(
-  (acc, restaurant) => ({ ...acc, [restaurant.id]: restaurant }),
+const defaultRestaurants = normalizedUsers.reduce(
+  (acc, user) => ({ ...acc, [user.id]: user.name }),
   {}
 );
 
