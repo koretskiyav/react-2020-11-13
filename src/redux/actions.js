@@ -1,5 +1,11 @@
-import { INCREMENT, DECREMENT, REMOVE } from './constants';
+import { v4 as uuidv4 } from 'uuid';
+
+import { INCREMENT, DECREMENT, REMOVE, ADD_REVIEW } from './constants';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
 export const decrement = (id) => ({ type: DECREMENT, payload: { id } });
 export const remove = (id) => ({ type: REMOVE, payload: { id } });
+export const addReview = (values) => ({
+  type: ADD_REVIEW,
+  payload: { ...values, id: uuidv4(), userId: uuidv4() },
+});
