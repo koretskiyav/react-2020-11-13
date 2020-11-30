@@ -4,10 +4,15 @@ import cn from 'classnames';
 
 import styles from './tabs.module.css';
 
-const Tabs = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(0);
+const Tabs = ({ tabs, initialActiveTab = 0, onChange }) => {
+  const [activeTab, setActiveTab] = useState(initialActiveTab);
 
   const { content } = tabs[activeTab];
+
+  const activateTab = (index) => {
+    setActiveTab(index);
+    onChange && onChange(index);
+  };
 
   return (
     <>
@@ -16,7 +21,7 @@ const Tabs = ({ tabs }) => {
           <span
             key={title}
             className={cn(styles.tab, { [styles.active]: index === activeTab })}
-            onClick={() => setActiveTab(index)}
+            onClick={() => activateTab(index)}
           >
             {title}
           </span>
