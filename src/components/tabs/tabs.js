@@ -4,23 +4,30 @@ import cn from 'classnames';
 
 import styles from './tabs.module.css';
 
-const Tabs = ({ tabs }) => {
+const Tabs = ({ tabs, onSetActiveCallback }) => {
   const [activeTab, setActiveTab] = useState(0);
-
   const { content } = tabs[activeTab];
 
   return (
     <>
       <div className={styles.tabs}>
-        {tabs.map(({ title }, index) => (
-          <span
-            key={title}
-            className={cn(styles.tab, { [styles.active]: index === activeTab })}
-            onClick={() => setActiveTab(index)}
-          >
-            {title}
-          </span>
-        ))}
+        {tabs.map((entity, index) => {
+          const { title } = entity;
+          return (
+            <span
+              key={title}
+              className={cn(styles.tab, {
+                [styles.active]: index === activeTab,
+              })}
+              onClick={() => {
+                setActiveTab(index);
+                onSetActiveCallback && onSetActiveCallback(entity);
+              }}
+            >
+              {title}
+            </span>
+          );
+        })}
       </div>
       {content}
     </>
