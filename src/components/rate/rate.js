@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 
 import Star from './star';
 
-const Rate = ({ value, onChange }) => (
+const Rate = ({ value, onChange, readOnly = false }) => (
   <div>
     {[...Array(5)].map((_, i) => (
-      <Star key={i} checked={i <= value - 1} onClick={() => onChange(i + 1)} />
+      <Star
+        key={i}
+        checked={i <= value - 1}
+        onClick={readOnly ? undefined : () => onChange(i + 1)}
+      />
     ))}
   </div>
 );
