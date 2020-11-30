@@ -1,6 +1,8 @@
 import React from 'react';
 import useForm from '../../../hooks/use-form';
 
+import { addreview } from '../../../redux/actions';
+
 import Rate from '../../rate';
 import styles from './review-form.module.css';
 import { connect } from 'react-redux';
@@ -8,12 +10,16 @@ import Button from '../../button';
 
 const INITIAL_VALUES = { name: '', text: '', rate: 5 };
 
-const ReviewForm = ({ onSubmit }) => {
+// const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = (props) => {
+  const onSubmit = props.onSubmit;
+  const activeRestaurant = props.activeRestaurant;
+
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onSubmit(values);
+    onSubmit(values, activeRestaurant);
     reset();
   };
 
@@ -51,6 +57,23 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
-}))(ReviewForm);
+function mapDispatchToProps(dispatch) {
+  return {
+    onSubmit: (values, activeRestaurant) => {
+      dispatch(
+        addreview({
+          name: values.name,
+          rating: values.rate,
+          text: values.text,
+          activeRestaurant: activeRestaurant,
+        })
+      );
+    },
+  };
+}
+
+const mapStateToProps = (state) => ({
+  activeRestaurant: state.activeRestaurant,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
