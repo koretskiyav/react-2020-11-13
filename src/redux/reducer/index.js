@@ -10,8 +10,8 @@ const reducer = combineReducers({
   order,
   restaurants,
   products,
-  reviews,
   users,
+  reviews,
 });
 
 export default reducer;
