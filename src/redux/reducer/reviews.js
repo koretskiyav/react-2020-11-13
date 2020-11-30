@@ -11,7 +11,11 @@ const reducer = (reviews = defaultReviews, action) => {
 
   switch (type) {
     case ADD_REVIEW:
-      return { ...reviews, [action.payload.id]: { ...action.payload } };
+      const { id, userId, text, rate } = action.payload;
+      return {
+        ...reviews,
+        [action.payload.id]: { id, userId, text, rating: rate },
+      };
     default:
       return reviews;
   }

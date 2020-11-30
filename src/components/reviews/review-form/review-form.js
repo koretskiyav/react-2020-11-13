@@ -9,12 +9,12 @@ import { addReview } from '../../../redux/actions';
 
 const INITIAL_VALUES = { name: '', text: '', rate: 5 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ onSubmit, activeRestaurant }) => {
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onSubmit(values);
+    onSubmit({ ...values, activeRestaurant });
     reset();
   };
 
@@ -52,6 +52,12 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, (dispatch) => ({
+const mapStateToProps = (state) => ({
+  activeRestaurant: state.activeRestaurant,
+});
+
+const mapDispatchToProps = (dispatch) => ({
   onSubmit: (values) => dispatch(addReview(values)),
-}))(ReviewForm);
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
