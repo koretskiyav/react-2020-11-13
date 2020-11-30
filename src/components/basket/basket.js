@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import styles from './basket.module.css';
 import BasketRow from './basket-row';
@@ -38,9 +39,9 @@ function Basket({ title = 'Basket', total, orderProducts }) {
   );
 }
 
-export default connect((state) => {
-  return {
-    total: totalSelector(state),
-    orderProducts: orderProductsSelector(state),
-  };
-})(Basket);
+const mapStateToProps = createStructuredSelector({
+  total: totalSelector,
+  orderProducts: orderProductsSelector,
+});
+
+export default connect(mapStateToProps)(Basket);
