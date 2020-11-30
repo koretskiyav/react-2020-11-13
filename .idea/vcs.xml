@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../edo-client" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../nodejs-20201126-2_roman-ershov" vcs="Git" />
+  </component>
+</project>

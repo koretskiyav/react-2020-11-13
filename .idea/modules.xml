@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../color-organizer/.idea/color-organizer.iml" filepath="$PROJECT_DIR$/../color-organizer/.idea/color-organizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../edo-client/.idea/edo-client.iml" filepath="$PROJECT_DIR$/../edo-client/.idea/edo-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nodejs-20201126-2_roman-ershov/.idea/nodejs-20201126-2_roman-ershov.iml" filepath="$PROJECT_DIR$/../nodejs-20201126-2_roman-ershov/.idea/nodejs-20201126-2_roman-ershov.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/react-2020-11-13.iml" filepath="$PROJECT_DIR$/.idea/react-2020-11-13.iml" />
+    </modules>
+  </component>
+</project>
