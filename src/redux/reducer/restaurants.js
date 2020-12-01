@@ -1,12 +1,13 @@
 import produce from 'immer';
-import { ADD_REVIEW } from '../constants';
-import { normalizedRestaurants } from '../../fixtures';
+import { ADD_REVIEW, LOAD_RESTAURANTS } from '../constants';
 import { arrToMap } from '../utils';
 
-const reducer = (state = arrToMap(normalizedRestaurants), action) => {
-  const { type, payload, reviewId } = action;
+const reducer = (state = {}, action) => {
+  const { type, payload, reviewId, response } = action;
 
   switch (type) {
+    case LOAD_RESTAURANTS:
+      return arrToMap(response);
     case ADD_REVIEW:
       return produce(state, (draft) => {
         draft[payload.restaurantId].reviews.push(reviewId);
