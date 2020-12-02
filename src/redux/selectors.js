@@ -1,12 +1,17 @@
+import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
-
+export const productsSelector = (state, id) =>
+  state.products[id]?.entities || state.products.entities;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+export const productsLoadingSelector = (state, id) =>
+  state.products[id]?.loading || state.products.loading;
+export const productsLoadedSelector = (state, id) =>
+  state.products[id]?.loaded || state.products.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,
@@ -36,8 +41,15 @@ export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
 );
+
+export const productsListSelector = createSelector(
+  productsSelector,
+  Object.values
+);
+
 export const productAmountSelector = getById(orderSelector, 0);
-export const productSelector = getById(productsSelector);
+// export const productSelector = getById(productsSelector);
+
 const reviewSelector = getById(reviewsSelector);
 
 export const reviewWitUserSelector = createSelector(
