@@ -1,9 +1,12 @@
 import { createSelector } from 'reselect';
 import { getById } from './utils';
 
-const restaurantsSelector = (state) => state.restaurants;
+const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) => state.products;
+
+export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
+export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,
