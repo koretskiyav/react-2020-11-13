@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -10,31 +10,33 @@ import Button from '../button';
 import { productAmountSelector, productSelector } from '../../redux/selectors';
 
 const Product = ({ product, amount, increment, decrement, fetchData }) => {
-  useEffect(() => {
-    fetchData && fetchData(product.id);
-  }, []); // eslint-disable-line
-
   return (
-    <div className={styles.product} data-id="product">
-      <div className={styles.content}>
-        <div>
-          <h4 className={styles.title}>{product.name}</h4>
-          <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
-        </div>
-        <div>
-          <div className={styles.counter}>
-            <div className={styles.count} data-id="product-amount">
-              {amount}
+    <React.Fragment>
+      {product && (
+        <div className={styles.product} data-id="product">
+          <div className={styles.content}>
+            <div>
+              <h4 className={styles.title}>{product.name}</h4>
+              <p className={styles.description}>
+                {product.ingredients.join(', ')}
+              </p>
+              <div className={styles.price}>{product.price} $</div>
             </div>
-            <div className={styles.buttons}>
-              <Button onClick={decrement} icon="minus" />
-              <Button onClick={increment} icon="plus" />
+            <div>
+              <div className={styles.counter}>
+                <div className={styles.count} data-id="product-amount">
+                  {amount}
+                </div>
+                <div className={styles.buttons}>
+                  <Button onClick={decrement} icon="minus" />
+                  <Button onClick={increment} icon="plus" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </React.Fragment>
   );
 };
 
