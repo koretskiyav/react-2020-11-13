@@ -79,10 +79,7 @@ export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
 );
-// export const productAmountSelector = createSelector(
-//   orderSelector,
-//   (state, props) =>
-// )
+
 export const productAmountSelector = getById(orderSelector, 0);
 
 export const reviewWithUserSelector = createSelector(
@@ -103,11 +100,10 @@ export const reviewsListSelector = createSelector(
 export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { reviews }) => reviews,
-  (/*reviews, ids*/) => {
-    return 0; //TODO: fixit;
-    // const ratings = ids.map((id) => reviews[id].rating);
-    // return Math.round(
-    //   ratings.reduce((acc, rating) => acc + rating) / ratings.length
-    // );
+  (reviews, ids) => {
+    const ratings = ids.map((id) => (reviews[id] && reviews[id].rating) || 0);
+    return Math.round(
+      ratings.reduce((acc, rating) => acc + rating) / ratings.length
+    );
   }
 );
