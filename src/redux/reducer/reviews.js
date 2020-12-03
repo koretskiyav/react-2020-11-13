@@ -53,7 +53,13 @@ const reducer = (state = initialState, action) => {
       const { text, rating } = payload.review;
       return {
         ...state,
-        [reviewId]: { id: reviewId, userId, text, rating },
+        loadedEntities: {
+          ...state.loadedEntities,
+          [payload.restaurantId]: {
+            ...state.loadedEntities[payload.restaurantId],
+            [reviewId]: { id: reviewId, userId, text, rating },
+          },
+        },
       };
     default:
       return state;
