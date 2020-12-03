@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { getById } from './utils';
 
@@ -20,6 +20,10 @@ export const reviewsLoadingSelector = (state, id) =>
   state.reviews[id]?.loading || state.reviews.loading;
 export const reviewsLoadedSelector = (state, id) =>
   state.reviews[id]?.loaded || state.reviews.loaded;
+
+export const usersSelector = (state) => state.users.entities;
+export const usersLoadingSelector = (state) => state.users.loading;
+export const usersLoadedSelector = (state) => state.reviews.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,

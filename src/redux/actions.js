@@ -33,12 +33,10 @@ export const loadProducts = (restaurantId) => ({
   CallAPI: `/api/products?id=${restaurantId}`,
 });
 
-export const loadUsers = (restaurantId) => async (dispatch) => {
+export const loadUsers = () => async (dispatch) => {
   dispatch({ type: LOAD_USERS + REQUEST });
   try {
-    const response = await fetch(`/api/users?id=${restaurantId}`).then((res) =>
-      res.json()
-    );
+    const response = await fetch(`/api/users`).then((res) => res.json());
     dispatch({ type: LOAD_USERS + SUCCESS, response });
   } catch (error) {
     dispatch({ type: LOAD_USERS + FAILURE, error });

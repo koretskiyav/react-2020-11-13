@@ -1,4 +1,4 @@
-import restaurant from '../../components/restaurant';
+// import restaurant from '../../components/restaurant';
 import { FAILURE, LOAD_PRODUCTS, REQUEST, SUCCESS } from '../constants';
 import { arrToMap } from '../utils';
 
