@@ -9,3 +9,11 @@ export const getById = (selector, defaultValue) =>
     (_, props) => props.id,
     (entity, id) => entity[id] || defaultValue
   );
+
+export const hasVisited = (selector) =>
+  createSelector(
+    selector,
+    (_, props) => props.restaurantId,
+    (visitedRestaurants, restaurantId) =>
+      visitedRestaurants.includes(restaurantId)
+  );

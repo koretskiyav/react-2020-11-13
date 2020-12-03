@@ -15,37 +15,33 @@ const initialState = {
   error: null,
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = produce((draft = initialState, action) => {
   const { type, payload, reviewId, response, error } = action;
 
   switch (type) {
     case LOAD_RESTAURANTS + REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
+      draft.loading = true;
+      draft.error = null;
+      break;
     case LOAD_RESTAURANTS + SUCCESS:
-      return {
-        ...state,
-        entities: arrToMap(response),
-        loading: false,
-        loaded: true,
+      draft.entities = {
+        ...draft.entities,
+        ...arrToMap(response),
       };
+      draft.loading = false;
+      draft.loaded = true;
+      break;
     case LOAD_RESTAURANTS + FAILURE:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error,
-      };
+      draft.loading = false;
+      draft.loaded = false;
+      draft.error = error;
+      break;
     case ADD_REVIEW:
-      return produce(state, (draft) => {
-        draft.entities[payload.restaurantId].reviews.push(reviewId);
-      });
+      draft.entities[payload.restaurantId].reviews.push(reviewId);
+      break;
     default:
-      return state;
+      return draft;
   }
-};
+});
 
 export default reducer;
