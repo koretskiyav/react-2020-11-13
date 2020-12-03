@@ -23,8 +23,6 @@ class Menu extends React.Component {
     this.setState({ error });
   }
 
-  // TODO : loadProducts by restaurant Id
-  // add 3rd flag to diff products of every restaurant
   componentDidMount() {
     if (!this.props.loading && !this.props.loaded) {
       this.props.loadProducts(this.props.id);
