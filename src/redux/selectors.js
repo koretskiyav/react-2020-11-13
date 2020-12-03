@@ -1,12 +1,26 @@
 import { createSelector } from 'reselect';
-import { getById } from './utils';
+import {
+  getById,
+  getKeysById,
+  entitiesTransform,
+  isEntityLoaded,
+} from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
+const productsSelector = (state) =>
+  entitiesTransform(state.products.loadedEntities);
+
+const reviewsSelector = (state) =>
+  entitiesTransform(state.reviews.loadedEntities);
+
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+
+export const usersLoadingSelector = (state) => state.users.loading;
+export const usersLoadedSelector = (state) => state.users.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,
@@ -29,9 +43,6 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
-
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
@@ -43,10 +54,12 @@ const reviewSelector = getById(reviewsSelector);
 export const reviewWitUserSelector = createSelector(
   reviewSelector,
   usersSelector,
-  (review, users) => ({
-    ...review,
-    user: users[review.userId]?.name,
-  })
+  (review, users) => {
+    return {
+      ...review,
+      user: users[review.userId]?.name,
+    };
+  }
 );
 
 export const averageRatingSelector = createSelector(
@@ -58,4 +71,22 @@ export const averageRatingSelector = createSelector(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
   }
+);
+
+const reviewsLoadedEntitiesSelector = (state) => state.reviews.loadedEntities;
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const isReviewsLoadedSelector = isEntityLoaded(
+  reviewsLoadedEntitiesSelector
+);
+export const reviewsKeysListSelector = getKeysById(
+  reviewsLoadedEntitiesSelector
+);
+
+const productsLoadedEntitiesSelector = (state) => state.products.loadedEntities;
+export const productsLoadingSelector = (state) => state.products.loading;
+export const isProductsLoadedSelector = isEntityLoaded(
+  productsLoadedEntitiesSelector
+);
+export const productsKeysListSelector = getKeysById(
+  productsLoadedEntitiesSelector
 );
