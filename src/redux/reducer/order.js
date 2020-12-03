@@ -1,24 +1,21 @@
+import produce from 'immer';
 import { DECREMENT, INCREMENT, REMOVE } from '../constants';
 
-// { [productId]: amount }
-const reducer = (state = {}, action) => {
+const reducer = produce((draft = {}, action) => {
   const { type, payload } = action;
   switch (type) {
     case INCREMENT:
-      return { ...state, [payload.id]: (state[payload.id] || 0) + 1 };
+      draft[payload.id] = (draft[payload.id] || 0) + 1;
+      break;
     case DECREMENT:
-      return {
-        ...state,
-        [payload.id]: Math.max((state[payload.id] || 0) - 1, 0),
-      };
+      draft[payload.id] = Math.max((draft[payload.id] || 0) - 1, 0);
+      break;
     case REMOVE:
-      return {
-        ...state,
-        [payload.id]: 0,
-      };
+      draft[payload.id] = 0;
+      break;
     default:
-      return state;
+      return draft;
   }
-};
+});
 
 export default reducer;

@@ -1,41 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import Product from '../product';
 import Basket from '../basket';
-
+import Loader from '../loader';
+import {
+  productsLoadedSelector,
+  productsLoadingSelector,
+  hasRestaurantProductsVisited,
+} from '../../redux/selectors';
 import styles from './menu.module.css';
+import { loadProducts } from '../../redux/actions';
 
-class Menu extends React.Component {
-  static propTypes = {
-    menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  };
+const Menu = ({
+  restaurantId,
+  menu,
+  loading,
+  loaded,
+  loadProducts,
+  visited,
+}) => {
+  useEffect(() => {
+    if (!visited && !loading) loadProducts(restaurantId);
+  }, [loadProducts, restaurantId, visited, loading]);
 
-  state = { error: null };
+  if (loading || !loaded) return <Loader />;
 
-  componentDidCatch(error) {
-    this.setState({ error });
-  }
-
-  render() {
-    const { menu } = this.props;
-
-    if (this.state.error) {
-      return <p>В этом ресторане меню не доступно</p>;
-    }
-
-    return (
-      <div className={styles.menu}>
-        <div>
-          {menu.map((id) => (
-            <Product key={id} id={id} />
-          ))}
-        </div>
-        <div>
-          <Basket />
-        </div>
+  return (
+    <div className={styles.menu}>
+      <div>
+        {menu.map((id) => (
+          <Product key={id} id={id} />
+        ))}
       </div>
-    );
-  }
-}
+      <div>
+        <Basket />
+      </div>
+    </div>
+  );
+};
 
-export default Menu;
+Menu.propTypes = {
+  restaurantId: PropTypes.string.isRequired,
+  menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  loading: PropTypes.bool,
+  loaded: PropTypes.bool,
+};
+
+export default connect(
+  (state, props) => ({
+    loading: productsLoadingSelector(state),
+    loaded: productsLoadedSelector(state),
+    visited: hasRestaurantProductsVisited(state, props),
+  }),
+  { loadProducts }
+)(Menu);
