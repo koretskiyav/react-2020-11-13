@@ -8,11 +8,10 @@ import {
 import { arrToMap } from '../utils';
 
 const initialState = {
-  entities: {},
   loading: false,
   loaded: false,
   error: null,
-  loadedKeys: [],
+  loadedEntities: {},
 };
 
 const reducer = (state = initialState, action) => {

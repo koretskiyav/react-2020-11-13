@@ -14,7 +14,7 @@ import styles from './menu.module.css';
 
 class Menu extends React.Component {
   static propTypes = {
-    restaurantId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   };
 
   state = { error: null };
@@ -26,17 +26,23 @@ class Menu extends React.Component {
   // TODO : loadProducts by restaurant Id
   // add 3rd flag to diff products of every restaurant
   componentDidMount() {
-    if (!this.props.loading && !this.props.loaded)
-      loadProducts(this.props.restaurantId);
+    // console.log('loading', this.props.loading);
+    // console.log('loaded', this.props.loaded);
+    if (!this.props.loading && !this.props.loaded) {
+      // console.log('load Products');
+      this.props.loadProducts(this.props.id);
+    }
   }
 
   render() {
+    console.log('loading', this.props.loading);
+    console.log('loaded', this.props.loaded);
     if (this.props.loading || !this.props.loaded) return <Loader />;
 
     if (this.state.error) {
       return <p>В этом ресторане меню не доступно</p>;
     }
-
+    console.log(this.props.menu);
     return (
       <div className={styles.menu}>
         <div>
@@ -54,7 +60,7 @@ class Menu extends React.Component {
 
 export default connect(
   (state, props) => ({
-    menu: productsKeysListSelector(state),
+    menu: productsKeysListSelector(state, props),
     loading: productsLoadingSelector(state),
     loaded: isProductsLoadedSelector(state, props),
   }),

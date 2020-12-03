@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect';
-import { getById } from './utils';
+import { getById, getKeysById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) =>
-  Object.values(state.products.loadedEntities);
-const reviewsSelector = (state) => Object.values(state.reviews.loadedEntities);
+  Object.values(state.products.loadedEntities)[0];
+const reviewsSelector = (state) =>
+  Object.values(state.reviews.loadedEntities)[0];
 const usersSelector = (state) => state.users;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
@@ -78,12 +79,13 @@ const productsLoadedEntitiesSelector = (state) => state.products.loadedEntities;
 export const productsLoadingSelector = (state) => state.products.loading;
 export const isProductsLoadedSelector = createSelector(
   productsLoadedEntitiesSelector,
-  (_, { restaurantId }) => restaurantId,
+  (_, { id }) => id,
   (entities, idGroup) => {
-    return !Object.keys(entities).includes(idGroup);
+    console.log(entities);
+    return Object.keys(entities).includes(idGroup);
   }
 );
 
-export const productsKeysListSelector = Object.keys(
-  getById(productsLoadedEntitiesSelector)
+export const productsKeysListSelector = getKeysById(
+  productsLoadedEntitiesSelector
 );

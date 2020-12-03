@@ -1,6 +1,7 @@
 import { REQUEST, SUCCESS, FAILURE } from '../constants';
 
 const api = (store) => (next) => async (action) => {
+  console.log(action);
   if (!action.CallAPI) return next(action);
 
   const { CallAPI, type, ...rest } = action;

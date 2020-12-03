@@ -47,9 +47,10 @@ export const loadReviews = (restaurantId) => async (dispatch) => {
   }
 };
 
-export const loadProducts = () => ({
+export const loadProducts = (restaurantId) => ({
   type: LOAD_PRODUCTS,
-  CallAPI: '/api/products',
+  CallAPI: `/api/products?id=${restaurantId}`,
+  restaurantId,
 });
 
 export const loadUsers = () => async (dispatch) => {
