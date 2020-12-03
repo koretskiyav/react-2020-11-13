@@ -4,14 +4,22 @@ import { getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
-export const productsSelector = (state, id) =>
-  state.products[id]?.entities || state.products.entities;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+
+export const productsSelector = (state, id) =>
+  state.products[id]?.entities || state.products.entities;
 export const productsLoadingSelector = (state, id) =>
   state.products[id]?.loading || state.products.loading;
 export const productsLoadedSelector = (state, id) =>
   state.products[id]?.loaded || state.products.loaded;
+
+export const reviewsSelector = (state, id) =>
+  state.reviews[id]?.entities || state.reviews.entities;
+export const reviewsLoadingSelector = (state, id) =>
+  state.reviews[id]?.loading || state.reviews.loading;
+export const reviewsLoadedSelector = (state, id) =>
+  state.reviews[id]?.loaded || state.reviews.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,
@@ -34,8 +42,8 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
+// const reviewsSelector = (state) => state.reviews;
+// const usersSelector = (state) => state.users;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -50,24 +58,24 @@ export const productsListSelector = createSelector(
 export const productAmountSelector = getById(orderSelector, 0);
 // export const productSelector = getById(productsSelector);
 
-const reviewSelector = getById(reviewsSelector);
+// const reviewSelector = getById(reviewsSelector);
 
-export const reviewWitUserSelector = createSelector(
-  reviewSelector,
-  usersSelector,
-  (review, users) => ({
-    ...review,
-    user: users[review.userId]?.name,
-  })
-);
+// export const reviewWitUserSelector = createSelector(
+//   reviewSelector,
+//   usersSelector,
+//   (review, users) => ({
+//     ...review,
+//     user: users[review.userId]?.name,
+//   })
+// );
 
-export const averageRatingSelector = createSelector(
-  reviewsSelector,
-  (_, { reviews }) => reviews,
-  (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
-    return Math.round(
-      ratings.reduce((acc, rating) => acc + rating) / ratings.length
-    );
-  }
-);
+// export const averageRatingSelector = createSelector(
+//   reviewsSelector,
+//   (_, { reviews }) => reviews,
+//   (reviews, ids) => {
+//     const ratings = ids.map((id) => reviews[id].rating);
+//     return Math.round(
+//       ratings.reduce((acc, rating) => acc + rating) / ratings.length
+//     );
+//   }
+// );

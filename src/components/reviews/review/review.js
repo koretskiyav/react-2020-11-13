@@ -33,5 +33,5 @@ Review.propTypes = {
 };
 
 export default connect((state, props) => ({
-  review: reviewWitUserSelector(state, props),
+  // review: reviewWitUserSelector(state, props),
 }))(Review);
