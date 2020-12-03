@@ -9,15 +9,27 @@ import {
   reviewsKeysListSelector,
   isReviewsLoadedSelector,
   reviewsLoadingSelector,
+  usersLoadingSelector,
+  usersLoadedSelector,
 } from '../../redux/selectors';
-import { loadReviews } from '../../redux/actions';
+import { loadReviews, loadUsers } from '../../redux/actions';
 
-const Reviews = ({ reviews, id, loadReviews, loading, loaded }) => {
+const Reviews = ({
+  reviews,
+  id,
+  loadReviews,
+  loadUsers,
+  loading,
+  loaded,
+  loadingUsers,
+  loadedUsers,
+}) => {
   useEffect(() => {
     if (!loading && !loaded) loadReviews(id);
+    if (!loadingUsers && !loadedUsers) loadUsers();
   }, [loadReviews, id]);
 
-  if (loading || !loaded) return <Loader />;
+  if (loading || !loaded || loadingUsers || !loadedUsers) return <Loader />;
 
   return (
     <div className={styles.reviews}>
@@ -39,6 +51,8 @@ export default connect(
     reviews: reviewsKeysListSelector(state, props), // get only reviews by restaurant id
     loading: reviewsLoadingSelector(state),
     loaded: isReviewsLoadedSelector(state, props),
+    loadingUsers: usersLoadingSelector(state),
+    loadedUsers: usersLoadedSelector(state),
   }),
-  { loadReviews }
+  { loadReviews, loadUsers }
 )(Reviews);

@@ -14,10 +14,13 @@ const productsSelector = (state) =>
 const reviewsSelector = (state) =>
   entitiesTransform(state.reviews.loadedEntities);
 
-const usersSelector = (state) => state.users;
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+
+export const usersLoadingSelector = (state) => state.users.loading;
+export const usersLoadedSelector = (state) => state.users.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,
