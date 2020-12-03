@@ -7,7 +7,7 @@ import styles from './menu.module.css';
 
 class Menu extends React.Component {
   static propTypes = {
-    menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    menu: PropTypes.object.isRequired,
   };
 
   state = { error: null };
@@ -26,8 +26,8 @@ class Menu extends React.Component {
     return (
       <div className={styles.menu}>
         <div>
-          {menu.map((id) => (
-            <Product key={id} id={id} />
+          {Object.values(menu).map((product) => (
+            <Product key={product.id} product={product} />
           ))}
         </div>
         <div>
