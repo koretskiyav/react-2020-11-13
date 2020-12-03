@@ -1,41 +1,35 @@
+import produce from 'immer';
 import { arrToMap } from '../utils';
 import { FAILURE, LOAD_PRODUCTS, REQUEST, SUCCESS } from '../constants';
 
 const initialState = {
   entities: {},
-  loading: false,
-  loaded: false,
+  loading: {},
+  loaded: {},
   error: null,
 };
 
 // { [productId]: product }
-const reducer = (state = initialState, action) => {
-  const { type, response, error } = action;
-
+const reducer = produce((draft = initialState, action) => {
+  const { type, response, error, restaurantId } = action;
   switch (type) {
     case LOAD_PRODUCTS + REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
+      draft.loading[restaurantId] = true;
+      draft.error = null;
+      break;
     case LOAD_PRODUCTS + SUCCESS:
-      return {
-        ...state,
-        entities: arrToMap(response),
-        loading: false,
-        loaded: true,
-      };
+      draft.entities[restaurantId] = arrToMap(response);
+      draft.loading[restaurantId] = false;
+      draft.loaded[restaurantId] = true;
+      break;
     case LOAD_PRODUCTS + FAILURE:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error,
-      };
+      draft.loading[restaurantId] = false;
+      draft.loaded[restaurantId] = false;
+      draft.error = error;
+      break;
     default:
-      return state;
+      return draft;
   }
-};
+});
 
 export default reducer;

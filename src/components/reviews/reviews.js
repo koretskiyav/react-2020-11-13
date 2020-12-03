@@ -5,17 +5,41 @@ import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 import { connect } from 'react-redux';
 
-import { loadReviews } from '../../redux/actions';
+import { loadReviews, loadUsers } from '../../redux/actions';
+import Loader from '../loader';
+import {
+  restaurantReviewsLoadedSelector,
+  restaurantReviewsLoadingSelector,
+  reviewsListSelector,
+  usersLoadedSelector,
+  usersLoadingSelector,
+} from '../../redux/selectors';
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
+const Reviews = ({
+  reviews,
+  restaurantId,
+  loadReviews,
+  reviewsLoading,
+  reviewsLoaded,
+  loadUsers,
+  usersLoading,
+  usersLoaded,
+}) => {
   useEffect(() => {
-    loadReviews(restaurantId);
-  }, [loadReviews, restaurantId]);
+    if (!reviewsLoading && !reviewsLoaded) loadReviews(restaurantId);
+  }, [loadReviews, restaurantId]); // eslint-disable-line
+
+  useEffect(() => {
+    if (!usersLoading && !usersLoaded) loadUsers();
+  }, []); //eslint-disable-line
+
+  if (reviewsLoading || !reviewsLoaded || usersLoading || !usersLoaded)
+    return <Loader />;
 
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
-        <Review key={id} id={id} />
+      {reviews.map((review) => (
+        <Review key={review.id} {...review} />
       ))}
       <ReviewForm restaurantId={restaurantId} />
     </div>
@@ -24,7 +48,14 @@ const Reviews = ({ reviews, restaurantId, loadReviews }) => {
 
 Reviews.propTypes = {
   restaurantId: PropTypes.string.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+const mapStateToProps = (state, { restaurantId }) => ({
+  reviewsLoading: restaurantReviewsLoadingSelector(state, restaurantId),
+  reviewsLoaded: restaurantReviewsLoadedSelector(state, restaurantId),
+  reviews: reviewsListSelector(state, restaurantId),
+  usersLoading: usersLoadingSelector(state),
+  usersLoaded: usersLoadedSelector(state),
+});
+
+export default connect(mapStateToProps, { loadReviews, loadUsers })(Reviews);

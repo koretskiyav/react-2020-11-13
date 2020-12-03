@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
@@ -6,36 +6,15 @@ import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
-import {
-  averageRatingSelector,
-  productsSelector,
-  productsLoadedSelector,
-  productsLoadingSelector,
-} from '../../redux/selectors';
+import { averageRatingSelector } from '../../redux/selectors';
 import { loadProducts } from '../../redux/actions';
-import Loader from '../loader';
 
-const Restaurant = ({
-  id,
-  name,
-  products,
-  reviews,
-  averageRating,
-  loadProducts,
-  loading,
-  loaded,
-}) => {
-  useEffect(() => {
-    loadProducts(id);
-  }, [id]); // eslint-disable-line
-
-  if (loading || !loaded) return <Loader />;
-
+const Restaurant = ({ id, name, averageRating }) => {
   const tabs = [
-    { title: 'Menu', content: <Menu menu={products} /> },
+    { title: 'Menu', content: <Menu restaurantId={id} /> },
     {
       title: 'Reviews',
-      content: <Reviews reviews={reviews} restaurantId={id} />,
+      content: <Reviews restaurantId={id} />,
     },
   ];
 
@@ -59,9 +38,6 @@ Restaurant.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   averageRating: averageRatingSelector(state, props),
-  products: productsSelector(state),
-  loading: productsLoadingSelector(state),
-  loaded: productsLoadedSelector(state),
 });
 
 export default connect(mapStateToProps, { loadProducts })(Restaurant);

@@ -14,10 +14,35 @@ export const productsLoadedSelector = (state) => state.products.loaded;
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const reviewsLoadedSelector = (state) => state.reviews.loaded;
+
+export const restaurantMenuSelector = createSelector(
+  productsSelector,
+  (_, id) => id,
+  (products, id) => products[id]
+);
+
+export const restaurantMenuLoadingSelector = createSelector(
+  productsLoadingSelector,
+  (_, id) => id,
+  (loading, id) => !!loading[id]
+);
+
+export const restaurantMenuLoadedSelector = createSelector(
+  productsLoadedSelector,
+  (_, id) => id,
+  (loaded, id) => !!loaded[id]
+);
+
 export const orderProductsSelector = createSelector(
   productsSelector,
   orderSelector,
-  (products, order) => {
+  (productMap, order) => {
+    const products = Object.values(productMap).reduce(
+      (acc, current) => ({ acc, ...current }),
+      {}
+    );
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
@@ -29,39 +54,60 @@ export const orderProductsSelector = createSelector(
   }
 );
 
+export const restaurantReviewsLoadingSelector = createSelector(
+  reviewsLoadingSelector,
+  (_, id) => id,
+  (loading, id) => !!loading[id]
+);
+
+export const restaurantReviewsLoadedSelector = createSelector(
+  reviewsLoadedSelector,
+  (_, id) => id,
+  (loaded, id) => !!loaded[id]
+);
+
 export const totalSelector = createSelector(
   orderProductsSelector,
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-const reviewsSelector = (state) => state.reviews;
+const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
 );
+// export const productAmountSelector = createSelector(
+//   orderSelector,
+//   (state, props) =>
+// )
 export const productAmountSelector = getById(orderSelector, 0);
-// export const productSelector = getById(productsSelector);
-const reviewSelector = getById(reviewsSelector);
 
-export const reviewWitUserSelector = createSelector(
-  reviewSelector,
+export const reviewWithUserSelector = createSelector(
   usersSelector,
-  (review, users) => ({
+  (_, review) => review,
+  (users, review) => ({
     ...review,
     user: users[review.userId]?.name,
   })
 );
 
+export const reviewsListSelector = createSelector(
+  reviewsSelector,
+  (_, id) => id,
+  (reviews, id) => reviews[id]
+);
+
 export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { reviews }) => reviews,
-  (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
-    return Math.round(
-      ratings.reduce((acc, rating) => acc + rating) / ratings.length
-    );
+  (/*reviews, ids*/) => {
+    return 0; //TODO: fixit;
+    // const ratings = ids.map((id) => reviews[id].rating);
+    // return Math.round(
+    //   ratings.reduce((acc, rating) => acc + rating) / ratings.length
+    // );
   }
 );

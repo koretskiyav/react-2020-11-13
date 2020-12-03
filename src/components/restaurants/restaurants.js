@@ -8,30 +8,20 @@ import {
   restaurantsListSelector,
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
-  usersLoadedSelector,
-  usersLoadingSelector,
 } from '../../redux/selectors';
-import { loadRestaurants, loadUsers } from '../../redux/actions';
+import { loadRestaurants } from '../../redux/actions';
 
 const Restaurants = ({
   restaurants,
   loadRestaurants,
   restaurantsLoading,
   restaurantsLoaded,
-  loadUsers,
-  usersLoading,
-  usersLoaded,
 }) => {
   useEffect(() => {
     if (!restaurantsLoading && !restaurantsLoaded) loadRestaurants();
   }, []); // eslint-disable-line
 
-  useEffect(() => {
-    if (!usersLoading && !usersLoaded) loadUsers();
-  }, []); //eslint-disable-line
-
-  if (restaurantsLoading || !restaurantsLoaded || usersLoading || !usersLoaded)
-    return <Loader />;
+  if (restaurantsLoading || !restaurantsLoaded) return <Loader />;
 
   const tabs = restaurants.map((restaurant) => ({
     title: restaurant.name,
@@ -54,8 +44,6 @@ export default connect(
     restaurants: restaurantsListSelector(state),
     restaurantsLoading: restaurantsLoadingSelector(state),
     restaurantsLoaded: restaurantsLoadedSelector(state),
-    usersLoading: usersLoadingSelector(state),
-    usersLoaded: usersLoadedSelector(state),
   }),
-  { loadRestaurants, loadUsers }
+  { loadRestaurants }
 )(Restaurants);

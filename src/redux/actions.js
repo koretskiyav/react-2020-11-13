@@ -29,18 +29,19 @@ export const loadRestaurants = () => ({
 
 export const loadProducts = (restaurantId) => ({
   type: LOAD_PRODUCTS,
+  restaurantId,
   CallAPI: `/api/products?id=${restaurantId}`,
 });
 
 export const loadReviews = (restaurantId) => async (dispatch) => {
-  dispatch({ type: LOAD_REVIEWS + REQUEST });
+  dispatch({ type: LOAD_REVIEWS + REQUEST, restaurantId });
   try {
     const response = await fetch(
       `/api/reviews?id=${restaurantId}`
     ).then((res) => res.json());
-    dispatch({ type: LOAD_REVIEWS + SUCCESS, response });
+    dispatch({ type: LOAD_REVIEWS + SUCCESS, response, restaurantId });
   } catch (error) {
-    dispatch({ type: LOAD_REVIEWS + FAILURE, error });
+    dispatch({ type: LOAD_REVIEWS + FAILURE, error, restaurantId });
   }
 };
 

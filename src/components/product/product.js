@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
 
 import { decrement, increment } from '../../redux/actions';
@@ -51,13 +50,13 @@ Product.propTypes = {
   increment: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  amount: productAmountSelector,
+const mapStateToProps = (state, { product }) => ({
+  amount: productAmountSelector(state, product),
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  increment: () => dispatch(increment(ownProps.id)),
-  decrement: () => dispatch(decrement(ownProps.id)),
+const mapDispatchToProps = (dispatch, { product }) => ({
+  increment: () => dispatch(increment(product.id)),
+  decrement: () => dispatch(decrement(product.id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
