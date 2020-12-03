@@ -3,8 +3,19 @@ import { getById, getKeysById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) =>
-  Object.values(state.products.loadedEntities)[0];
+const productsSelector = (state) => {
+  const productsEntities = Object.values(state.products.loadedEntities);
+  const test = productsEntities.reduce((total, rest) => {
+    const v = Object.values(rest).reduce((menu, pr) => {
+      return { ...menu, [pr.id]: pr };
+    }, {});
+    return { ...total, ...v };
+  }, {});
+  return test;
+};
+
+// [{productId : {id:..., name:...}}, {{}}, {}]
+//{productId : {id:.., name:...}, productId : {...}, ...}
 const reviewsSelector = (state) =>
   Object.values(state.reviews.loadedEntities)[0];
 const usersSelector = (state) => state.users;
