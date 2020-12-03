@@ -8,7 +8,7 @@ import Rate from '../rate';
 import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
+const Restaurant = ({ id, name, reviews, averageRating }) => {
   const tabs = [
     { title: 'Menu', content: <Menu id={id} /> },
     {
@@ -36,5 +36,6 @@ Restaurant.propTypes = {
 };
 
 export default connect((state, props) => ({
+  // TODO
   averageRating: 5,
 }))(Restaurant);
