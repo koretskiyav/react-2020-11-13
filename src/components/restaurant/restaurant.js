@@ -10,7 +10,7 @@ import { averageRatingSelector } from '../../redux/selectors';
 
 const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} /> },
+    { title: 'Menu', content: <Menu restaurantId={id} /> },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
@@ -36,5 +36,5 @@ Restaurant.propTypes = {
 };
 
 export default connect((state, props) => ({
-  averageRating: averageRatingSelector(state, props),
+  averageRating: 5,
 }))(Restaurant);

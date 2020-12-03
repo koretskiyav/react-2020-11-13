@@ -3,7 +3,10 @@ import { getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
+const productsSelector = (state) =>
+  Object.values(state.products.loadedEntities);
+const reviewsSelector = (state) => Object.values(state.reviews.loadedEntities);
+const usersSelector = (state) => state.users;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -28,9 +31,6 @@ export const totalSelector = createSelector(
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
-
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -58,4 +58,32 @@ export const averageRatingSelector = createSelector(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
   }
+);
+
+const reviewsLoadedEntitiesSelector = (state) => state.reviews.loadedEntities;
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const isReviewsLoadedSelector = createSelector(
+  reviewsLoadedEntitiesSelector,
+  (_, { restaurantId }) => restaurantId,
+  (entities, idGroup) => {
+    return !Object.keys(entities).includes(idGroup);
+  }
+);
+
+export const reviewsKeysListSelector = Object.keys(
+  getById(reviewsLoadedEntitiesSelector)
+);
+
+const productsLoadedEntitiesSelector = (state) => state.products.loadedEntities;
+export const productsLoadingSelector = (state) => state.products.loading;
+export const isProductsLoadedSelector = createSelector(
+  productsLoadedEntitiesSelector,
+  (_, { restaurantId }) => restaurantId,
+  (entities, idGroup) => {
+    return !Object.keys(entities).includes(idGroup);
+  }
+);
+
+export const productsKeysListSelector = Object.keys(
+  getById(productsLoadedEntitiesSelector)
 );
