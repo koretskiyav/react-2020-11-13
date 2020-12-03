@@ -33,10 +33,10 @@ const reducer = (state = initialState, action) => {
         error: null,
       };
     case LOAD_REVIEWS + SUCCESS:
+      console.log(('restaurant id', restaurantId));
       return {
         ...state,
         loading: false,
-        loaded: true,
         loadedEntities: {
           ...state.loadedEntities,
           [restaurantId]: arrToMap(response),

@@ -20,8 +20,6 @@ const reducer = (state = initialState, action) => {
         error: null,
       };
     case LOAD_PRODUCTS + SUCCESS:
-      console.log('products success');
-      console.log('rest id', restaurantId);
       return {
         ...state,
         loading: false,

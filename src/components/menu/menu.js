@@ -27,26 +27,21 @@ class Menu extends React.Component {
   // add 3rd flag to diff products of every restaurant
   componentDidMount() {
     if (!this.props.loading && !this.props.loaded) {
-      console.log('load Products');
       this.props.loadProducts(this.props.id);
     }
   }
   componentDidUpdate() {
     if (!this.props.loading && !this.props.loaded) {
-      console.log('load Products');
       this.props.loadProducts(this.props.id);
     }
   }
 
   render() {
-    console.log('render loading', this.props.loading);
-    console.log('render loaded', this.props.loaded);
     if (this.props.loading || !this.props.loaded) return <Loader />;
 
     if (this.state.error) {
       return <p>В этом ресторане меню не доступно</p>;
     }
-    console.log(this.props.menu);
     return (
       <div className={styles.menu}>
         <div>

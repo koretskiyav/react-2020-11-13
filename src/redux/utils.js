@@ -8,7 +8,8 @@ export const getById = (selector, defaultValue) =>
     selector,
     (_, props) => props.id,
     (entity, id) => {
-      console.log(entity);
+      console.log('entity', entity);
+      console.log('id', id);
       return entity[id] || defaultValue;
     }
   );

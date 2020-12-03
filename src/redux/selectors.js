@@ -14,10 +14,16 @@ const productsSelector = (state) => {
   return test;
 };
 
-// [{productId : {id:..., name:...}}, {{}}, {}]
-//{productId : {id:.., name:...}, productId : {...}, ...}
-const reviewsSelector = (state) =>
-  Object.values(state.reviews.loadedEntities)[0];
+const reviewsSelector = (state) => {
+  const reviewsEntities = Object.values(state.reviews.loadedEntities);
+  const test = reviewsEntities.reduce((total, rest) => {
+    const v = Object.values(rest).reduce((menu, pr) => {
+      return { ...menu, [pr.id]: pr };
+    }, {});
+    return { ...total, ...v };
+  }, {});
+  return test;
+};
 const usersSelector = (state) => state.users;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
@@ -55,10 +61,14 @@ const reviewSelector = getById(reviewsSelector);
 export const reviewWitUserSelector = createSelector(
   reviewSelector,
   usersSelector,
-  (review, users) => ({
-    ...review,
-    user: users[review.userId]?.name,
-  })
+  (review, users) => {
+    console.log('review', review);
+    console.log('users', users);
+    return {
+      ...review,
+      user: users[review.userId]?.name,
+    };
+  }
 );
 
 export const averageRatingSelector = createSelector(
@@ -76,14 +86,15 @@ const reviewsLoadedEntitiesSelector = (state) => state.reviews.loadedEntities;
 export const reviewsLoadingSelector = (state) => state.reviews.loading;
 export const isReviewsLoadedSelector = createSelector(
   reviewsLoadedEntitiesSelector,
-  (_, { restaurantId }) => restaurantId,
+  (_, { id }) => id,
   (entities, idGroup) => {
-    return !Object.keys(entities).includes(idGroup);
+    console.log(entities);
+    return Object.keys(entities).includes(idGroup);
   }
 );
 
-export const reviewsKeysListSelector = Object.keys(
-  getById(reviewsLoadedEntitiesSelector)
+export const reviewsKeysListSelector = getKeysById(
+  reviewsLoadedEntitiesSelector
 );
 
 const productsLoadedEntitiesSelector = (state) => state.products.loadedEntities;
@@ -92,7 +103,6 @@ export const isProductsLoadedSelector = createSelector(
   productsLoadedEntitiesSelector,
   (_, { id }) => id,
   (entities, idGroup) => {
-    console.log(entities);
     return Object.keys(entities).includes(idGroup);
   }
 );
