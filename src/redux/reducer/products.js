@@ -1,5 +1,4 @@
 import produce from 'immer';
-import { normalizedProducts } from '../../fixtures';
 import { arrToMap } from '../utils';
 import { LOAD_PRODUCTS, REQUEST, SUCCESS, FAILURE } from '../constants';
 
