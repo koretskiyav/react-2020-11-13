@@ -1,41 +1,46 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import Product from '../product';
 import Basket from '../basket';
-
 import styles from './menu.module.css';
+import Loader from '../loader';
 
-class Menu extends React.Component {
-  static propTypes = {
-    menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  };
+import {
+  productsSelector,
+  // productsListSelector,
+  productsLoadedSelector,
+  productsLoadingSelector,
+} from '../../redux/selectors';
+import { loadProducts } from '../../redux/actions';
 
-  state = { error: null };
-
-  componentDidCatch(error) {
-    this.setState({ error });
-  }
-
-  render() {
-    const { menu } = this.props;
-
-    if (this.state.error) {
-      return <p>В этом ресторане меню не доступно</p>;
+const Menu = ({ products, restaurantId, loadProducts, loading, loaded }) => {
+  useEffect(() => {
+    if (!loading && !loaded) {
+      loadProducts(restaurantId);
     }
-
-    return (
-      <div className={styles.menu}>
-        <div>
-          {menu.map((id) => (
-            <Product key={id} id={id} />
-          ))}
-        </div>
-        <div>
-          <Basket />
-        </div>
+  }, [products, restaurantId, loading, loaded, loadProducts]);
+  if ((loading || !loaded) && !products) return <Loader />;
+  //
+  return (
+    <div className={styles.menu}>
+      <div>
+        {Object.values(products).map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
       </div>
-    );
-  }
-}
+      <div>
+        <Basket />
+      </div>
+    </div>
+  );
+};
 
-export default Menu;
+export default connect(
+  (state, ownProps) => ({
+    products: productsSelector(state, ownProps.restaurantId),
+    loading: productsLoadingSelector(state, ownProps.restaurantId),
+    loaded: productsLoadedSelector(state, ownProps.restaurantId),
+    restaurantId: ownProps.restaurantId,
+  }),
+  { loadProducts }
+)(Menu);
