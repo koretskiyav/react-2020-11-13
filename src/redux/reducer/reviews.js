@@ -1,9 +1,9 @@
-import { ADD_REVIEW } from '../constants';
-import { normalizedReviews } from '../../fixtures';
-import { arrToMap } from '../utils';
+import { combineReducers } from 'redux';
+import { ADD_REVIEW, LOAD_REVIEWS, SUCCESS} from '../constants';
+import { arrToMap, listByIdReducer } from '../utils';
 
-const reducer = (state = arrToMap(normalizedReviews), action) => {
-  const { type, payload, reviewId, userId } = action;
+const entities = (state = {}, action) => {
+  const { type, payload, response, reviewId, userId } = action;
 
   switch (type) {
     case ADD_REVIEW:
@@ -12,9 +12,14 @@ const reducer = (state = arrToMap(normalizedReviews), action) => {
         ...state,
         [reviewId]: { id: reviewId, userId, text, rating },
       };
+    case LOAD_REVIEWS + SUCCESS:
+      return { ...state, ...arrToMap(response) };
     default:
       return state;
   }
 };
 
-export default reducer;
+export default combineReducers({
+  entities,
+  listByRestaurant: listByIdReducer(LOAD_REVIEWS)
+});
