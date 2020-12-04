@@ -1,16 +1,20 @@
 import React, { PureComponent } from 'react';
-import { Route } from 'react-router-dom';
-import Restaurants from '../restaurants';
+import { Route, Switch } from 'react-router-dom';
 import Header from '../header';
 import Basket from '../basket';
+import RestaurantsPage from '../../pages/restaurants-page';
 
 export default class App extends PureComponent {
   render() {
     return (
       <div>
         <Header />
-        <Route path="/checkout" component={Basket} />
-        <Route path="/restaurants/:restId" component={Restaurants} />
+        <Switch>
+          <Route path="/" exact component={() => 'Main page'} />
+          <Route path="/checkout" component={Basket} />
+          <Route path="/restaurants" component={RestaurantsPage} />
+          <Route path="/" component={() => '404 - not found'} />
+        </Switch>
       </div>
     );
   }
