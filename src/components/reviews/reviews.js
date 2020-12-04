@@ -4,13 +4,21 @@ import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
+import {
+  reviewsOfRestaurantsLoadingSelector,
+  reviewsOfRestaurantsLoadedSelector,
+} from '../../redux/selectors';
 import { loadReviews } from '../../redux/actions';
+import Loader from '../loader';
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
+const Reviews = ({ reviews, restaurantId, loadReviews, loading, loaded }) => {
   useEffect(() => {
-    loadReviews(restaurantId);
+    if (!loading && !loaded) loadReviews(restaurantId);
   }, [loadReviews, restaurantId]);
+
+  if (loading || !loaded) return <Loader />;
 
   return (
     <div className={styles.reviews}>
@@ -27,4 +35,9 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+const mapStateToProps = createStructuredSelector({
+  loading: reviewsOfRestaurantsLoadingSelector,
+  loaded: reviewsOfRestaurantsLoadedSelector,
+});
+
+export default connect(mapStateToProps, { loadReviews })(Reviews);

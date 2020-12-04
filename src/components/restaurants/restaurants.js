@@ -10,6 +10,7 @@ import {
   restaurantsLoadingSelector,
 } from '../../redux/selectors';
 import { loadRestaurants } from '../../redux/actions';
+import { createStructuredSelector } from 'reselect';
 
 const Restaurants = ({ restaurants, loadRestaurants, loading, loaded }) => {
   useEffect(() => {
@@ -34,11 +35,10 @@ Restaurants.propTypes = {
   ).isRequired,
 };
 
-export default connect(
-  (state) => ({
-    restaurants: restaurantsListSelector(state),
-    loading: restaurantsLoadingSelector(state),
-    loaded: restaurantsLoadedSelector(state),
-  }),
-  { loadRestaurants }
-)(Restaurants);
+const mapStateToProps = createStructuredSelector({
+  restaurants: restaurantsListSelector,
+  loading: restaurantsLoadingSelector,
+  loaded: restaurantsLoadedSelector,
+});
+
+export default connect(mapStateToProps, { loadRestaurants })(Restaurants);
