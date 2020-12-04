@@ -63,14 +63,5 @@ export const loadUsers = () => async (dispatch, getState) => {
 
   if (loading || loaded) return;
 
-  dispatch({ type: LOAD_USERS + REQUEST });
-
-  try {
-    const data = await fetch('/api/users');
-    const response = await data.json();
-
-    dispatch({ type: LOAD_USERS + SUCCESS, response });
-  } catch (error) {
-    dispatch({ type: LOAD_USERS + FAILURE, error });
-  }
+  dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
 };
