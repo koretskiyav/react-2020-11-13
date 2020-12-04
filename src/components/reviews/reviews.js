@@ -4,6 +4,7 @@ import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import {
   reviewsOfRestaurantsLoadingSelector,
@@ -34,10 +35,9 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-export default connect(
-  (state, props) => ({
-    loading: reviewsOfRestaurantsLoadingSelector(state, props),
-    loaded: reviewsOfRestaurantsLoadedSelector(state, props),
-  }),
-  { loadReviews }
-)(Reviews);
+const mapStateToProps = createStructuredSelector({
+  loading: reviewsOfRestaurantsLoadingSelector,
+  loaded: reviewsOfRestaurantsLoadedSelector,
+});
+
+export default connect(mapStateToProps, { loadReviews })(Reviews);

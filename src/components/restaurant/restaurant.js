@@ -1,14 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
-import { averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
+const Restaurant = ({ id, name, menu, reviews, averageRating = 0 }) => {
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
     {
@@ -35,6 +33,4 @@ Restaurant.propTypes = {
   averageRating: PropTypes.number,
 };
 
-export default connect((state, props) => ({
-  averageRating: 0, //averageRatingSelector(state, props),
-}))(Restaurant);
+export default Restaurant;

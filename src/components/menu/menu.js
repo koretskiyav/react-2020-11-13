@@ -5,6 +5,7 @@ import Product from '../product';
 import Basket from '../basket';
 import { loadProducts } from '../../redux/actions';
 import { menuLoadedSelector, menuLoadingSelector } from '../../redux/selectors';
+import { createStructuredSelector } from 'reselect';
 
 import styles from './menu.module.css';
 import Loader from '../loader';
@@ -61,10 +62,9 @@ class Menu extends React.Component {
   }
 }
 
-export default connect(
-  (state, props) => ({
-    loading: menuLoadingSelector(state, props),
-    loaded: menuLoadedSelector(state, props),
-  }),
-  { loadProducts }
-)(Menu);
+const mapStateToProps = createStructuredSelector({
+  loading: menuLoadingSelector,
+  loaded: menuLoadedSelector,
+});
+
+export default connect(mapStateToProps, { loadProducts })(Menu);
