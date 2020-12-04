@@ -1,4 +1,5 @@
 import React from 'react';
+import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
 import Rate from '../../rate';
@@ -32,6 +33,8 @@ Review.propTypes = {
   }),
 };
 
-export default connect((state, props) => ({
-  review: reviewWitUserSelector(state, props),
-}))(Review);
+export default connect(
+  createStructuredSelector({
+    review: reviewWitUserSelector,
+  })
+)(Review);
