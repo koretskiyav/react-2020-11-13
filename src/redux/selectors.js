@@ -9,6 +9,7 @@ const productsLoadedSelector = (state) => state.products.loaded;
 const reviewsLoadingSelector = (state) => state.reviews.loading;
 const reviewsLoadedSelector = (state) => state.reviews.loaded;
 const reviewsSelector = (state) => state.reviews.entities;
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -57,8 +58,6 @@ export const totalSelector = createSelector(
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
-
-const usersSelector = (state) => state.users;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
