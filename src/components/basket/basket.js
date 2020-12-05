@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
 import styles from './basket.module.css';
@@ -32,9 +33,11 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <BasketRow label="Sub-total" content={`${total} $`} />
       <BasketRow label="Delivery costs:" content="FREE" />
       <BasketRow label="total" content={`${total} $`} bold />
-      <Button primary block>
-        checkout
-      </Button>
+      <Link to="/checkout">
+        <Button primary block>
+          checkout
+        </Button>
+      </Link>
     </div>
   );
 }

@@ -1,30 +1,34 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
-import Tabs from '../tabs';
-import Loader from '../loader';
-import {
-  restaurantsListSelector,
-  restaurantsLoadedSelector,
-  restaurantsLoadingSelector,
-} from '../../redux/selectors';
-import { loadRestaurants } from '../../redux/actions';
+import { restaurantsListSelector } from '../../redux/selectors';
 
-const Restaurants = ({ restaurants, loadRestaurants, loading, loaded }) => {
-  useEffect(() => {
-    if (!loading && !loaded) loadRestaurants();
-  }, []); // eslint-disable-line
+import styles from './restaurants.module.css';
 
-  if (loading || !loaded) return <Loader />;
+const Restaurants = ({ restaurants, match }) => {
+  const { restId } = match.params;
+  const restaurant = restaurants.find((restaurant) => restaurant.id === restId);
 
-  const tabs = restaurants.map((restaurant) => ({
-    title: restaurant.name,
-    content: <Restaurant {...restaurant} />,
-  }));
-
-  return <Tabs tabs={tabs} />;
+  return (
+    <>
+      <div className={styles.tabs}>
+        {restaurants.map(({ id, name }) => (
+          <NavLink
+            key={id}
+            to={`/restaurants/${id}`}
+            className={styles.tab}
+            activeClassName={styles.active}
+          >
+            {name}
+          </NavLink>
+        ))}
+      </div>
+      <Restaurant {...restaurant} />
+    </>
+  );
 };
 
 Restaurants.propTypes = {
@@ -38,8 +42,5 @@ Restaurants.propTypes = {
 export default connect(
   createStructuredSelector({
     restaurants: restaurantsListSelector,
-    loading: restaurantsLoadingSelector,
-    loaded: restaurantsLoadedSelector,
-  }),
-  { loadRestaurants }
+  })
 )(Restaurants);
