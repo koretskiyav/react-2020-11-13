@@ -26,7 +26,7 @@ const Restaurants = ({ restaurants, match }) => {
           </NavLink>
         ))}
       </div>
-      <Restaurant {...restaurant} />
+      <Restaurant {...restaurant} match={match} />
     </>
   );
 };
