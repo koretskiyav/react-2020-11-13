@@ -9,3 +9,10 @@ export const getById = (selector, defaultValue) =>
     (_, props) => props.id,
     (entity, id) => entity[id] || defaultValue
   );
+
+export const findIdInListOfObjects = (list, prop, id) => {
+  const restaurant = list.find((higher) => {
+    return higher[prop].find((item) => item === id);
+  });
+  return restaurant && restaurant.id;
+};
