@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
+import Menu from '../components/menu';
+import Reviews from '../components/reviews';
+
 import Loader from '../components/loader';
 import {
   restaurantsListSelector,
