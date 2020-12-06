@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { getById } from './utils';
+import { findIdInListOfObjects, getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
@@ -24,10 +24,16 @@ export const reviewsLoadedSelector = (state, props) =>
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
+export const restaurantsListSelector = createSelector(
+  restaurantsSelector,
+  Object.values
+);
+
 export const orderProductsSelector = createSelector(
   productsSelector,
   orderSelector,
-  (products, order) => {
+  restaurantsListSelector,
+  (products, order, restaurants) => {
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
@@ -35,6 +41,7 @@ export const orderProductsSelector = createSelector(
         product,
         amount: order[product.id],
         subtotal: order[product.id] * product.price,
+        restaurantId: findIdInListOfObjects(restaurants, 'menu', product.id),
       }));
   }
 );
@@ -45,10 +52,6 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-export const restaurantsListSelector = createSelector(
-  restaurantsSelector,
-  Object.values
-);
 export const productAmountSelector = getById(orderSelector, 0);
 export const productSelector = getById(productsSelector);
 const reviewSelector = getById(reviewsSelector);

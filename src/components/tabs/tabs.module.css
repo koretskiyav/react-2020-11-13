@@ -5,8 +5,10 @@
   background-color: var(--grey);
 }
 
-.tabs span {
+.tabs a {
   cursor: pointer;
+  text-decoration: none;
+  color: #1d1d1d;
 }
 
 .tab {
