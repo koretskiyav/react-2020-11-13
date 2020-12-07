@@ -38,7 +38,9 @@ function RestaurantsPage({
     );
   }
 
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+  return (
+    <Route path="/restaurants/:restId/:section?" component={Restaurants} />
+  );
 }
 
 export default connect(
