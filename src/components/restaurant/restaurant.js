@@ -7,24 +7,50 @@ import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
-import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
+import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
+
+import styles from './restaurant.module.css';
 
 const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
-  const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
-    {
-      title: 'Reviews',
-      content: <Reviews reviews={reviews} restaurantId={id} />,
-    },
-  ];
+  const match = useRouteMatch();
+  const menuUrl = `${match.url}/menu`;
+  const reviewsUrl = `${match.url}/reviews`;
+  console.log(match);
 
   return (
     <div>
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
-      <Tabs tabs={tabs} />
+      <div className={styles.tabs}>
+        <NavLink
+          key={'menu'}
+          to={menuUrl}
+          className={styles.tab}
+          activeClassName={styles.active}
+        >
+          Menu
+        </NavLink>
+        <NavLink
+          key={'reviews'}
+          to={reviewsUrl}
+          className={styles.tab}
+          activeClassName={styles.active}
+        >
+          Reviews
+        </NavLink>
+      </div>
+      <Switch>
+        <Route
+          path={`${match.path}/menu`}
+          render={() => <Menu menu={menu} restaurantId={id} />}
+        />
+        <Route
+          path={`${match.path}/reviews`}
+          render={() => <Reviews reviews={reviews} restaurantId={id} />}
+        />
+      </Switch>
     </div>
   );
 };
