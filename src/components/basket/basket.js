@@ -7,9 +7,18 @@ import styles from './basket.module.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  totalSelector,
+  productsWithRestIdSelector,
+} from '../../redux/selectors';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  productsWithRestIds,
+}) {
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -22,12 +31,17 @@ function Basket({ title = 'Basket', total, orderProducts }) {
     <div className={styles.basket}>
       <h4 className={styles.title}>{title}</h4>
       {orderProducts.map(({ product, amount, subtotal }) => (
-        <BasketItem
-          product={product}
-          amount={amount}
+        <Link
           key={product.id}
-          subtotal={subtotal}
-        />
+          to={`/restaurants/` + productsWithRestIds[product.id]}
+        >
+          <BasketItem
+            product={product}
+            amount={amount}
+            key={product.id}
+            subtotal={subtotal}
+          />
+        </Link>
       ))}
       <hr className={styles.hr} />
       <BasketRow label="Sub-total" content={`${total} $`} />
@@ -45,6 +59,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  productsWithRestIds: productsWithRestIdSelector,
 });
 
 export default connect(mapStateToProps)(Basket);

@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+//import restaurants from '../components/restaurants';
 import { getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
@@ -70,5 +71,18 @@ export const averageRatingSelector = createSelector(
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
+  }
+);
+
+export const productsWithRestIdSelector = createSelector(
+  restaurantsSelector,
+  (restaurants) => {
+    const productList = {};
+    Object.keys(restaurants).map((restaurantId) =>
+      restaurants[restaurantId].menu.map(
+        (productId) => (productList[productId] = restaurantId)
+      )
+    );
+    return productList;
   }
 );
