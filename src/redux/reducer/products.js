@@ -1,5 +1,4 @@
 import produce from 'immer';
-import { arrToMap } from '../utils';
 import { LOAD_PRODUCTS, REQUEST, SUCCESS, FAILURE } from '../constants';
 
 const initialState = {
@@ -22,7 +21,15 @@ const reducer = (state = initialState, action) =>
         draft.loading[restaurantId] = false;
         draft.loaded[restaurantId] = true;
         draft.error = null;
-        draft.entities = { ...draft.entities, ...arrToMap(response) };
+        draft.entities = {
+          ...draft.entities,
+          ...response.reduce(
+            (products, product) => ({
+              ...products,
+              [product.id]: {restaurantId, ...product }
+            }),
+            {})
+        };
         break;
       }
       case LOAD_PRODUCTS + FAILURE: {
