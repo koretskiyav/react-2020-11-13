@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
@@ -20,7 +21,14 @@ const Restaurants = ({ restaurants, match }) => {
   return (
     <>
       <Tabs tabs={tabs} />
+
       {restaurant && <Restaurant {...restaurant} />}
+
+      <Redirect
+        exact
+        from="/restaurants"
+        to={`/restaurants/${restaurants[0].id}/menu`}
+      />
     </>
   );
 };
