@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../header';
 import Basket from '../basket';
 import RestaurantsPage from '../../pages/restaurants-page';
+import ErrorPage from '../../pages/error-page';
 import { UserProvider } from '../../contexts/user-context';
 
 const App = () => {
@@ -14,7 +15,8 @@ const App = () => {
         <Switch>
           <Route path="/checkout" component={Basket} />
           <Route path="/restaurants" component={RestaurantsPage} />
-          <Route path="/error" component={() => <h1>Error Page</h1>} />
+          <Route path="/error" component={ErrorPage} />
+          <Route path="/success" component={() => <h1>Thanks for order!</h1>} />
           <Redirect from="/" to="/restaurants" />
         </Switch>
       </UserProvider>
