@@ -29,6 +29,11 @@ export const restaurantsListSelector = createSelector(
   Object.values
 );
 
+export const firstRestaurantIdSelector = createSelector(
+  restaurantsListSelector,
+  (restaurants) => restaurants[0]?.id
+);
+
 const restaurantsIdsByProductsSelector = createSelector(
   restaurantsListSelector,
   (restaurants) =>
