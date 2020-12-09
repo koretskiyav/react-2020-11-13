@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { replace, push } from 'connected-react-router';
 import {
   INCREMENT,
   DECREMENT,
@@ -11,12 +11,14 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  POST_ORDER,
 } from './constants';
 import {
   usersLoadingSelector,
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  postOrderLoadingSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
@@ -55,6 +57,39 @@ export const loadReviews = (restaurantId) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: LOAD_REVIEWS + FAILURE, error, restaurantId });
     dispatch(replace('/error'));
+  }
+};
+
+export const checkoutOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  const loading = postOrderLoadingSelector(state);
+
+  if (loading) return;
+  dispatch({ type: POST_ORDER + REQUEST });
+  try {
+    const { entities } = state.order;
+    const order = JSON.stringify(
+      Object.keys(entities).map((key) => ({
+        id: key,
+        amount: entities[key],
+      }))
+    );
+    const response = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: order,
+    });
+
+    if (response.ok) {
+      dispatch({ type: POST_ORDER + SUCCESS, payload: response });
+    } else {
+      const error = await response.json();
+      dispatch({ type: POST_ORDER + FAILURE, error });
+    }
+    dispatch(push('/order-confirmation'));
+  } catch (error) {
+    dispatch({ type: POST_ORDER + FAILURE, error });
+    dispatch(push('/order-confirmation'));
   }
 };
 

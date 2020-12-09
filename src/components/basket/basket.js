@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
@@ -10,10 +9,22 @@ import './basket.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  postOrderLoadingSelector,
+  totalSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { checkoutOrder } from '../../redux/actions';
+import Loader from '../loader';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  checkoutOrder,
+  loading,
+}) {
   // const { name } = useContext(userContext);
 
   if (!total) {
@@ -26,7 +37,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 
   return (
     <div className={styles.basket}>
-      {/* <h4 className={styles.title}>{`${name}'s ${title}`}</h4> */}
+      {loading && <Loader />}
       <h4 className={styles.title}>
         <UserConsumer>{({ name }) => `${name}'s ${title}`}</UserConsumer>
       </h4>
@@ -42,6 +53,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
               amount={amount}
               subtotal={subtotal}
               restaurantId={restaurantId}
+              disabled={loading}
             />
           </CSSTransition>
         ))}
@@ -50,11 +62,9 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <BasketRow label="Sub-total" content={`${total} $`} />
       <BasketRow label="Delivery costs:" content="FREE" />
       <BasketRow label="total" content={`${total} $`} bold />
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      <Button primary block onClick={checkoutOrder} disabled={loading}>
+        checkout
+      </Button>
     </div>
   );
 }
@@ -62,6 +72,11 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  loading: postOrderLoadingSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = (dispatch) => ({
+  checkoutOrder: () => dispatch(checkoutOrder()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);
