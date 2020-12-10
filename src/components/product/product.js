@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
+import { convert, CurrencyConsumer } from '../../contexts/currency-context';
 
 import { decrement, increment } from '../../redux/actions';
 
@@ -18,7 +19,11 @@ const Product = ({ product, amount = 0, increment, decrement }) => {
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>
+            <CurrencyConsumer>
+              {({ currency }) => convert(product.price, currency)}
+            </CurrencyConsumer>
+          </div>
         </div>
         <div>
           <div className={styles.counter}>

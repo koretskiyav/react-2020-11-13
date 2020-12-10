@@ -22,6 +22,17 @@
   margin-top: 22px;
 }
 
+.basket button:disabled,
+.basket button:disabled:hover {
+  cursor: default;
+  background: var(--grey);
+  border-color: var(--grey);
+}
+
+.basket [data-id='loader'] {
+  margin: 10px auto;
+}
+
 @media all and (max-width: 767px) {
   .basket {
     padding: 20px 24px;
