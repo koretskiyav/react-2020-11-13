@@ -10,10 +10,26 @@ import './basket.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  totalSelector,
+  routeSelector,
+  pushProductsSelector,
+  orderLoadingSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+import { pushOrder } from '../../redux/actions';
+
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  pathname,
+  pushProducts,
+  pushOrder,
+  loading,
+}) {
   // const { name } = useContext(userContext);
 
   if (!total) {
@@ -50,11 +66,23 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <BasketRow label="Sub-total" content={`${total} $`} />
       <BasketRow label="Delivery costs:" content="FREE" />
       <BasketRow label="total" content={`${total} $`} bold />
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      {pathname === '/checkout' ? (
+        loading ? (
+          <Button primary block>
+            loading...
+          </Button>
+        ) : (
+          <Button onClick={() => pushOrder(pushProducts)} primary block>
+            PUSH
+          </Button>
+        )
+      ) : (
+        <Link to="/checkout">
+          <Button primary block>
+            checkout
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }
@@ -62,6 +90,13 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  pathname: routeSelector,
+  pushProducts: pushProductsSelector,
+  loading: orderLoadingSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+// const mapDispatchToProps = (dispatch, ownProps) => ({
+//   pushOrder: () => dispatch(pushOrder(ownProps.pushProducts)),
+// });
+
+export default connect(mapStateToProps, { pushOrder })(Basket);
