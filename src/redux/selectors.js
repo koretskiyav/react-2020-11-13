@@ -28,6 +28,12 @@ export const postOrderLoadingSelector = (state) => state.order.loading;
 
 export const orderErrorSelector = (state) => state.order.error;
 
+export const errorSelector = (state) =>
+  Object.values(state).reduce(
+    (acc, st) => (st.error ? [...acc, st.error] : acc),
+    []
+  );
+
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values

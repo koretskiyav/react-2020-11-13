@@ -82,14 +82,15 @@ export const checkoutOrder = () => async (dispatch, getState) => {
 
     if (response.ok) {
       dispatch({ type: POST_ORDER + SUCCESS, payload: response });
+      dispatch(push('/order-success'));
     } else {
       const error = await response.json();
       dispatch({ type: POST_ORDER + FAILURE, error });
+      dispatch(push('/error'));
     }
-    dispatch(push('/order-confirmation'));
   } catch (error) {
     dispatch({ type: POST_ORDER + FAILURE, error });
-    dispatch(push('/order-confirmation'));
+    dispatch(push('/error'));
   }
 };
 
