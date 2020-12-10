@@ -2,15 +2,30 @@ import React, { useContext } from 'react';
 
 import Logo from './logo';
 import styles from './header.module.css';
-import userContext from '../../contexts/user-context';
+import currencyContext, {
+  USD,
+  EUR,
+  GBP,
+} from '../../contexts/currency-context';
+import cn from 'classnames';
 
 const Header = () => {
-  const { name, setName } = useContext(userContext);
+  const { currency, setCurrency } = useContext(currencyContext);
+
+  const buttons = [USD, EUR, GBP].map((curr) => (
+    <button
+      key={curr}
+      className={cn(curr === currency && styles.active, 'block', 'small')}
+      onClick={() => setCurrency(curr)}
+    >
+      {curr}
+    </button>
+  ));
 
   return (
-    <header className={styles.header} onClick={() => setName('Ivan')}>
+    <header className={styles.header}>
       <Logo />
-      <h2>{name}</h2>
+      <div className={styles.currency}>{buttons}</div>
     </header>
   );
 };

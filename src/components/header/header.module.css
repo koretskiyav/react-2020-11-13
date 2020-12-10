@@ -13,3 +13,26 @@
   right: 20px;
   top: 0;
 }
+
+.currency {
+  position: absolute;
+  right: 0;
+  display: flex;
+}
+
+button {
+  height: 30px;
+  padding: 5px;
+  font-size: 12px;
+  background: var(--yellow-light);
+  border: 1px solid var(--yellow-light);
+  margin: 1px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+button.active {
+  background: var(--orange-light);
+  border: 1px solid var(--orange-light);
+  outline: none;
+}
