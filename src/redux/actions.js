@@ -71,7 +71,6 @@ export const loadUsers = () => async (dispatch, getState) => {
 
 export const buyOrder = (orderData) => async (dispatch) => {
   const errorHandler = (errMessage) => {
-    console.log('error buy', errMessage);
     dispatch({ type: BUY_ORDER + FAILURE, errMessage });
     dispatch(
       replace({
@@ -81,7 +80,6 @@ export const buyOrder = (orderData) => async (dispatch) => {
     );
   };
 
-  console.log(orderData);
   dispatch({ type: BUY_ORDER + REQUEST });
   try {
     let responseSuccess = false;
@@ -95,7 +93,6 @@ export const buyOrder = (orderData) => async (dispatch) => {
       }
       return res.json();
     });
-    console.log(response);
     if (!responseSuccess) {
       errorHandler(response);
       return;

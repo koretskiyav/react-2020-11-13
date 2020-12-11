@@ -94,7 +94,6 @@ export const averageRatingSelector = createSelector(
 export const buyProductsSelector = createSelector(
   orderProductsSelector,
   (products) => {
-    console.log(products);
     return products.map((product) => ({
       id: product.product.id,
       amount: product.amount,

@@ -42,7 +42,6 @@ function Basket({
 
   const executeOrder = () => {
     if (match.path === '/checkout') {
-      console.log('checkout page');
       buyOrder(dataToBuy);
     }
   };
