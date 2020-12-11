@@ -10,11 +10,18 @@ import './basket.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import Loader from '../loader';
+import { orderProductsSelector, totalSelector, orderProcessingSelector} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { submitOrder } from '../../redux/actions';
+import { withCurrency } from '../../contexts/currency-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({ title = 'Basket', total, orderProducts, canCheckout, submitOrder, processing, convertCurrency }) {
   // const { name } = useContext(userContext);
+
+  if (processing) {
+    return <Loader />
+  }
 
   if (!total) {
     return (
@@ -23,6 +30,12 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       </div>
     );
   }
+
+  const checkoutButton = canCheckout
+    ? <Button onClick={submitOrder} primary block>checkout</Button>
+    : <Link to="/checkout">
+        <Button primary block>checkout</Button>
+      </Link>;
 
   return (
     <div className={styles.basket}>
@@ -47,14 +60,11 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={`${convertCurrency(total)}`} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      <BasketRow label="total" content={`${convertCurrency(total)}`} bold />
+
+      {checkoutButton}
     </div>
   );
 }
@@ -62,6 +72,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  processing: orderProcessingSelector
 });
 
-export default connect(mapStateToProps)(Basket);
+export default connect(mapStateToProps, { submitOrder })(withCurrency(Basket));

@@ -8,8 +8,9 @@ import { decrement, increment } from '../../redux/actions';
 
 import Button from '../button';
 import { productAmountSelector, productSelector } from '../../redux/selectors';
+import { withCurrency } from '../../contexts/currency-context';
 
-const Product = ({ product, amount = 0, increment, decrement }) => {
+const Product = ({ product, amount = 0, increment, decrement, convertCurrency }) => {
   if (!product) return null;
 
   return (
@@ -18,7 +19,7 @@ const Product = ({ product, amount = 0, increment, decrement }) => {
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>{convertCurrency(product.price)}</div>
         </div>
         <div>
           <div className={styles.counter}>
@@ -58,4 +59,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   decrement: () => dispatch(decrement(ownProps.id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(withCurrency(Product));

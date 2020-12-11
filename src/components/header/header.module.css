@@ -13,3 +13,9 @@
   right: 20px;
   top: 0;
 }
+
+.currencies {
+  position: absolute;
+  left: 20px;
+  color: var(--white);
+}

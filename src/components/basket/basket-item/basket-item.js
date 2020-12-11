@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { increment, decrement, remove } from '../../../redux/actions';
 import Button from '../../button';
 import styles from './basket-item.module.css';
+import {withCurrency} from "../../../contexts/currency-context";
 
 function BasketItem({
   product,
@@ -14,6 +15,7 @@ function BasketItem({
   increment,
   decrement,
   remove,
+  convertCurrency
 }) {
   return (
     <div className={styles.basketItem}>
@@ -38,7 +40,7 @@ function BasketItem({
             small
           />
         </div>
-        <p className={cn(styles.count, styles.price)}>{subtotal} $</p>
+        <p className={cn(styles.count, styles.price)}>{convertCurrency(subtotal)}</p>
         <Button
           onClick={() => remove(product.id)}
           icon="delete"
@@ -50,4 +52,4 @@ function BasketItem({
   );
 }
 
-export default connect(null, { increment, decrement, remove })(BasketItem);
+export default connect(null, { increment, decrement, remove })(withCurrency(BasketItem));
