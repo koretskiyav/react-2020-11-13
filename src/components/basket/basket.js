@@ -10,11 +10,27 @@ import './basket.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  totalSelector,
+  checkoutProcessingSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { checkout } from '../../redux/actions';
+import Loader from '../loader';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  checkout,
+  processing,
+}) {
   // const { name } = useContext(userContext);
+
+  if (processing) {
+    return <Loader />;
+  }
 
   if (!total) {
     return (
@@ -51,7 +67,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <BasketRow label="Delivery costs:" content="FREE" />
       <BasketRow label="total" content={`${total} $`} bold />
       <Link to="/checkout">
-        <Button primary block>
+        <Button onClick={checkout} primary block>
           checkout
         </Button>
       </Link>
@@ -62,6 +78,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  processing: checkoutProcessingSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+export default connect(mapStateToProps, { checkout })(Basket);

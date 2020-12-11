@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT, REMOVE } from '../constants';
+import { DECREMENT, INCREMENT, REMOVE, CHECKOUT, SUCCESS } from '../constants';
 
 // { [productId]: amount }
 const reducer = (state = {}, action) => {
@@ -16,6 +16,9 @@ const reducer = (state = {}, action) => {
         ...state,
         [payload.id]: 0,
       };
+
+    case CHECKOUT + SUCCESS:
+      return {};
     default:
       return state;
   }

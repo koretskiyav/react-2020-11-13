@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { replace, push } from 'connected-react-router';
 import {
   INCREMENT,
   DECREMENT,
@@ -8,6 +8,7 @@ import {
   LOAD_REVIEWS,
   LOAD_PRODUCTS,
   LOAD_USERS,
+  CHECKOUT,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -17,6 +18,7 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  checkoutSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
@@ -66,4 +68,29 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const checkout = () => async (dispatch, getState) => {
+  //const
+  dispatch({ type: CHECKOUT + REQUEST });
+
+  try {
+    const state = getState();
+    const order = checkoutSelector(state);
+    const response = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    });
+
+    if (response.ok) {
+      dispatch({ type: CHECKOUT + SUCCESS });
+      dispatch(push('/order-success'));
+    } else {
+      throw await response.json();
+    }
+  } catch (error) {
+    dispatch({ type: CHECKOUT + FAILURE });
+    dispatch(push('/error', error));
+  }
 };
