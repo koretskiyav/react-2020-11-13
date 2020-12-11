@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
@@ -12,7 +12,13 @@ import {
 
 import { loadRestaurants } from '../redux/actions';
 
-function RestaurantsPage({ loadRestaurants, loading, loaded, match }) {
+function RestaurantsPage({
+  restaurants,
+  loadRestaurants,
+  loading,
+  loaded,
+  match,
+}) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, []); // eslint-disable-line
@@ -20,12 +26,7 @@ function RestaurantsPage({ loadRestaurants, loading, loaded, match }) {
   if (loading || !loaded) return <Loader />;
 
   if (match.isExact) {
-    return (
-      <>
-        <Restaurants match={match} />
-        <h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
-      </>
-    );
+    return <Redirect to={`/restaurants/${restaurants[0].id}`} />;
   }
 
   return <Route path="/restaurants/:restId" component={Restaurants} />;
