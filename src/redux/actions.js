@@ -4,6 +4,7 @@ import {
   DECREMENT,
   REMOVE,
   ADD_REVIEW,
+  BUY_ORDER,
   LOAD_RESTAURANTS,
   LOAD_REVIEWS,
   LOAD_PRODUCTS,
@@ -66,4 +67,43 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const buyOrder = (orderData) => async (dispatch) => {
+  const errorHandler = (errMessage) => {
+    console.log('error buy', errMessage);
+    dispatch({ type: BUY_ORDER + FAILURE, errMessage });
+    dispatch(
+      replace({
+        pathname: '/buy-error',
+        errorMessage: errMessage,
+      })
+    );
+  };
+
+  console.log(orderData);
+  dispatch({ type: BUY_ORDER + REQUEST });
+  try {
+    let responseSuccess = false;
+    const response = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData),
+    }).then((res) => {
+      if (res.status === 200) {
+        responseSuccess = true;
+      }
+      return res.json();
+    });
+    console.log(response);
+    if (!responseSuccess) {
+      errorHandler(response);
+      return;
+    }
+
+    dispatch({ type: BUY_ORDER + SUCCESS, response });
+    dispatch(replace('/buy-success'));
+  } catch (error) {
+    errorHandler(error);
+  }
 };

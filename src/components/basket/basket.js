@@ -1,21 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import { buyOrder } from '../../redux/actions';
 import styles from './basket.module.css';
 import './basket.css';
 
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import Loader from '../loader';
+import {
+  orderProductsSelector,
+  totalSelector,
+  buyProductsSelector,
+  checkoutLoadingSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  buyOrder,
+  dataToBuy,
+  loading,
+  match,
+}) {
   // const { name } = useContext(userContext);
-
+  if (loading) {
+    return <Loader />;
+  }
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -23,6 +39,13 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       </div>
     );
   }
+
+  const executeOrder = () => {
+    if (match.path === '/checkout') {
+      console.log('checkout page');
+      buyOrder(dataToBuy);
+    }
+  };
 
   return (
     <div className={styles.basket}>
@@ -50,7 +73,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <BasketRow label="Sub-total" content={`${total} $`} />
       <BasketRow label="Delivery costs:" content="FREE" />
       <BasketRow label="total" content={`${total} $`} bold />
-      <Link to="/checkout">
+      <Link to="/checkout" onClick={executeOrder}>
         <Button primary block>
           checkout
         </Button>
@@ -62,6 +85,8 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  dataToBuy: buyProductsSelector,
+  loading: checkoutLoadingSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+export default connect(mapStateToProps, { buyOrder })(withRouter(Basket));
