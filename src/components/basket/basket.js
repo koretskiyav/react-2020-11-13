@@ -14,8 +14,9 @@ import Loader from '../loader';
 import { orderProductsSelector, totalSelector, orderProcessingSelector} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 import { submitOrder } from '../../redux/actions';
+import { withCurrency } from '../../contexts/currency-context';
 
-function Basket({ title = 'Basket', total, orderProducts, canCheckout, submitOrder, processing }) {
+function Basket({ title = 'Basket', total, orderProducts, canCheckout, submitOrder, processing, convertCurrency }) {
   // const { name } = useContext(userContext);
 
   if (processing) {
@@ -59,9 +60,9 @@ function Basket({ title = 'Basket', total, orderProducts, canCheckout, submitOrd
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={`${convertCurrency(total)}`} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={`${convertCurrency(total)}`} bold />
 
       {checkoutButton}
     </div>
@@ -74,4 +75,4 @@ const mapStateToProps = createStructuredSelector({
   processing: orderProcessingSelector
 });
 
-export default connect(mapStateToProps, { submitOrder })(Basket);
+export default connect(mapStateToProps, { submitOrder })(withCurrency(Basket));

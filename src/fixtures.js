@@ -381,10 +381,29 @@ const normalizedUsers = [
   },
 ];
 
+const normalizedCurrencies = [
+  {
+    code: 'USD',
+    sign: '$',
+    rate: 1
+  },
+  {
+    code: 'UAH',
+    sign: '₴',
+    rate: 28
+  },
+  {
+    code: 'EUR',
+    sign: '€',
+    rate: 0.8
+  }
+];
+
 export {
   restaurants,
   normalizedProducts,
   normalizedRestaurants,
   normalizedReviews,
   normalizedUsers,
+  normalizedCurrencies
 };
