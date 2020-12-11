@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import { convertaition } from '../../contexts/currency-context';
+
 import styles from './basket.module.css';
 import './basket.css';
 
@@ -63,9 +65,9 @@ function Basket({
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={convertaition(total)} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={convertaition(total)} bold />
       {pathname === '/checkout' ? (
         loading ? (
           <Button primary block>
