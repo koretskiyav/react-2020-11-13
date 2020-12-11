@@ -4,13 +4,13 @@ import Header from '../header';
 import Basket from '../basket';
 import RestaurantsPage from '../../pages/restaurants-page';
 import ErrorPage from '../../pages/error-page';
-import { UserProvider } from '../../contexts/user-context';
+import { CurrencyProvider } from '../../contexts/currency-context';
 
 const App = () => {
-  const [name, setName] = useState('Igor');
+  const [currency, setCurrency] = useState('USD');
   return (
     <div>
-      <UserProvider value={{ name, setName }}>
+      <CurrencyProvider value={{ currency, setCurrency }}>
         <Header />
         <Switch>
           <Route path="/checkout" component={Basket} />
@@ -19,7 +19,7 @@ const App = () => {
           <Route path="/success" component={() => <h1>Thanks for order!</h1>} />
           <Redirect from="/" to="/restaurants" />
         </Switch>
-      </UserProvider>
+      </CurrencyProvider>
     </div>
   );
 };
