@@ -16,6 +16,7 @@ import {
   checkoutProcessingSelector,
 } from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { CurrencyConsumer } from '../../contexts/currency-context';
 import { checkout } from '../../redux/actions';
 import Loader from '../loader';
 
@@ -23,11 +24,9 @@ function Basket({
   title = 'Basket',
   total,
   orderProducts,
-  checkout,
+  onCheckout = (f) => f,
   processing,
 }) {
-  // const { name } = useContext(userContext);
-
   if (processing) {
     return <Loader />;
   }
@@ -63,11 +62,26 @@ function Basket({
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow
+        label="Sub-total"
+        content={
+          <CurrencyConsumer>
+            {({ convert, currency }) => convert(total, currency)}
+          </CurrencyConsumer>
+        }
+      />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow
+        label="total"
+        content={
+          <CurrencyConsumer>
+            {({ convert, currency }) => convert(total, currency)}
+          </CurrencyConsumer>
+        }
+        bold
+      />
       <Link to="/checkout">
-        <Button onClick={checkout} primary block>
+        <Button onClick={onCheckout} primary block>
           checkout
         </Button>
       </Link>
@@ -81,4 +95,4 @@ const mapStateToProps = createStructuredSelector({
   processing: checkoutProcessingSelector,
 });
 
-export default connect(mapStateToProps, { checkout })(Basket);
+export default connect(mapStateToProps, { onCheckout: checkout })(Basket);
