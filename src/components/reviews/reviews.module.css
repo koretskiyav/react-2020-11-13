@@ -4,3 +4,22 @@
   max-width: 884px;
   width: 100%;
 }
+
+/* React Transition Group */
+.reviewAnimationEnter {
+  opacity: 0;
+  transform: translateX(-150%);
+}
+.reviewAnimationEnterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 750ms, transform 750ms;
+}
+.reviewAnimationExit {
+  opacity: 1;
+}
+.reviewAnimationExitActive {
+  opacity: 0;
+  transform: translateX(-150%);
+  transition: opacity 750ms, transform 750ms;
+}

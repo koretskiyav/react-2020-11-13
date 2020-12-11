@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
 
+import { convertaition } from '../../contexts/currency-context';
+
 import { decrement, increment } from '../../redux/actions';
 
 import Button from '../button';
@@ -18,7 +20,7 @@ const Product = ({ product, amount = 0, increment, decrement }) => {
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>{convertaition(product.price)}</div>
         </div>
         <div>
           <div className={styles.counter}>
