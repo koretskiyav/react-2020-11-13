@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -10,11 +10,31 @@ import './basket.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import { checkout } from '../../redux/actions';
+import {
+  checkoutOrderProductsSelector,
+  orderProductsSelector,
+  currentRouteSelector,
+  orderSavingSelector,
+  totalSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import Loader from '../loader';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
-  // const { name } = useContext(userContext);
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  checkoutProducts,
+  route,
+  checkout,
+  saving,
+}) {
+  const onClickHandler = useCallback(() => {
+    if (route === '/checkout') {
+      checkout(checkoutProducts);
+    }
+  }, [checkoutProducts, route, checkout]);
 
   if (!total) {
     return (
@@ -22,6 +42,10 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         <h4 className={styles.title}>Select a meal from the list</h4>
       </div>
     );
+  }
+
+  if (saving) {
+    return <Loader />;
   }
 
   return (
@@ -47,11 +71,11 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={total} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={total} bold />
       <Link to="/checkout">
-        <Button primary block>
+        <Button primary block onClick={onClickHandler}>
           checkout
         </Button>
       </Link>
@@ -61,7 +85,10 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
+  saving: orderSavingSelector,
+  route: currentRouteSelector,
   orderProducts: orderProductsSelector,
+  checkoutProducts: checkoutOrderProductsSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+export default connect(mapStateToProps, { checkout })(Basket);

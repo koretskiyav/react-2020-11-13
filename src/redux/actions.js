@@ -4,6 +4,7 @@ import {
   DECREMENT,
   REMOVE,
   ADD_REVIEW,
+  CHECKOUT,
   LOAD_RESTAURANTS,
   LOAD_REVIEWS,
   LOAD_PRODUCTS,
@@ -66,4 +67,29 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const checkout = (checkoutProducts) => async (dispatch, getState) => {
+  dispatch({ type: CHECKOUT + REQUEST });
+  try {
+    const response = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(checkoutProducts),
+    }).then(async (res) => {
+      if (!res.ok) {
+        const text = await res.json();
+
+        throw new Error(text);
+      } else {
+        return res.json();
+      }
+    });
+
+    dispatch({ type: CHECKOUT + SUCCESS, response });
+    dispatch(replace('/success'));
+  } catch (error) {
+    dispatch({ type: CHECKOUT + FAILURE, error: error?.message });
+    dispatch(replace('/error', { error: error?.message }));
+  }
 };
